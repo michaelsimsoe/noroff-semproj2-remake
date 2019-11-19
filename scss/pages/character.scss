@@ -1,0 +1,23 @@
+.character-select {
+  margin-top: 300px;
+  margin-bottom: 200px;
+  width: 100vw;
+  
+  & .houses,
+  & .character-select__characters {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    & div {
+      margin: 10px;
+    }
+  }
+
+  & .character-select__characters {
+    width: 30%;
+
+  }
+
+}
+
