@@ -1,49 +1,93 @@
 import { House } from './char_select/house.js';
+import { Character } from './char_select/character.js';
 
 document.addEventListener('DOMContentLoaded', async function(event) {
+  let playerOneIsSet = false;
+  let playerTwoIsSet = false;
   const hamburgerMenu = document.getElementById('menu');
+  const CHARACTERSTATUS_CONTAINER = document.getElementById('character-status');
+
   hamburgerMenu.addEventListener('click', function(event) {
     hamburgerMenu.classList.toggle('open');
     // navigation.classList.toggle('navigation--open');
   });
 
+  const HOUSES = [
+    {
+      house: 'House Stark of Winterfell',
+      characters: ['Arya Stark', 'Jon Snow']
+    },
+    {
+      house: "House Baratheon of Storm's End",
+      characters: ['Robert I Baratheon', 'Stannis Baratheon']
+    },
+    {
+      house: 'House Greyjoy of Pyke',
+      characters: ['Asha Greyjoy', 'Theon Greyjoy']
+    },
+    {
+      house: 'House Lannister of Casterly Rock',
+      characters: ['Cersei Lannister', 'Jaime Lannister']
+    },
+    {
+      house: "House Targaryen of King's Landing",
+      characters: ['Daenerys Targaryen', 'Viserys Targaryen']
+    }
+  ];
+  let houseArray = [];
   const HOUSES_CONTAINER = document.querySelector('.houses');
-  const CHARACTER_CONTAINER = document.querySelectorAll(
+  HOUSES.forEach(async house => {
+    let h = new House(await getHouse(house.house));
+    house.characters.forEach(async char => {
+      h.addCharacter(new Character(await getCharacter(char)));
+    });
+
+    houseArray.push(h);
+    HOUSES_CONTAINER.innerHTML += h.displayHouseSigilToDom();
+  });
+
+  const CHARACTER_CONTAINER = document.querySelector(
     '.character-select__characters'
   );
-  HOUSES_CONTAINER.addEventListener('click', function(e) {
-    Array.from(CHARACTER_CONTAINER).forEach(container => {
-      container.children[0].innerHTML += e.target.innerHTML;
-    });
+  HOUSES_CONTAINER.addEventListener(
+    'click',
+    function(e) {
+      let houseName = e.path.find(el => el.dataset.name).dataset.name;
+      let currentHouse = houseArray.find(house => house.name === houseName);
+      CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
+    },
+    false
+  );
+
+  CHARACTER_CONTAINER.addEventListener('click', function(e) {
+    if (e.target.classList.contains('char-select-btn')) {
+      console.log(e.target.parentElement.dataset.character);
+      setPlayer(e.target.parentElement.dataset.character);
+    }
   });
-  const CHARACTERS = [
-    'Arya Stark',
-    'Jon Snow',
-    'Cersei Lannister',
-    'Jaime Lannister',
-    'Daenerys Targaryen',
-    'Viserys Targaryen',
-    'Asha Greyjoy',
-    'Theon Greyjoy',
-    'Robert I Baratheon',
-    'Stannis Baratheon'
-  ];
-  CHARACTERS.forEach(async character => {
-    let c = await getCharacter(character);
-    console.log(c);
-  });
-  const HOUSES = [
-    // 'House Stark of Winterfell',
-    "House Baratheon of Storm's End"
-    // 'House Greyjoy of Pyke',
-    // 'House Lannister of Casterly Rock',
-    // "House Targaryen of King's Landing"
-  ];
-  HOUSES.forEach(async house => {
-    let h = await getHouse(house);
-    let newHouse = new House(h);
-    HOUSES_CONTAINER.children[0].innerHTML += newHouse.displayHouseSigilToDom();
-  });
+
+  function setPlayer(name) {
+    if (playerOneIsSet && playerTwoIsSet) {
+      return;
+    }
+    if (!playerOneIsSet) {
+      CHARACTERSTATUS_CONTAINER.querySelector(
+        '#select-player-one'
+      ).innerHTML = name;
+      playerOneIsSet = true;
+      return;
+    }
+    CHARACTERSTATUS_CONTAINER.querySelector(
+      '#select-player-two'
+    ).innerHTML = name;
+    playerTwoIsSet = true;
+    readyToPlay();
+    return;
+  }
+
+  function readyToPlay() {
+    document.getElementById('begin-btn').classList.remove('begin-btn--hidden');
+  }
 });
 
 const URL = 'https://www.anapioficeandfire.com/api/';
