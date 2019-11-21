@@ -6,7 +6,8 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   let playerTwoIsSet = false;
   const hamburgerMenu = document.getElementById('menu');
   const CHARACTERSTATUS_CONTAINER = document.getElementById('character-status');
-
+  let PLAYER_ONE = '';
+  let PLAYER_TWO = '';
   hamburgerMenu.addEventListener('click', function(event) {
     hamburgerMenu.classList.toggle('open');
     // navigation.classList.toggle('navigation--open');
@@ -74,6 +75,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       CHARACTERSTATUS_CONTAINER.querySelector(
         '#select-player-one'
       ).innerHTML = name;
+      localStorage.setItem('player-one', name);
       playerOneIsSet = true;
       return;
     }
@@ -81,6 +83,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       '#select-player-two'
     ).innerHTML = name;
     playerTwoIsSet = true;
+    localStorage.setItem('player-two', name);
     readyToPlay();
     return;
   }

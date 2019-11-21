@@ -6,7 +6,8 @@ body {
   min-height: 100vh; }
 
 .main-header {
-  width: 100vw; }
+  width: 100vw;
+  height: 100px; }
   .main-header svg {
     width: 100vw;
     position: absolute; }
@@ -81,6 +82,8 @@ body {
   visibility: hidden; }
 
 .game__board svg {
-  max-height: 60vh; }
+  max-height: 70vh; }
+  .game__board svg .player-token {
+    height: 70px; }
 
 /*# sourceMappingURL=main.css.map */

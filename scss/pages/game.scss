@@ -1,5 +1,11 @@
 .game {
   &__board svg {
-    max-height: 60vh;
+    max-height: 70vh;
+
+    & {
+      .player-token {
+        height: 70px;
+      }
+    }
   }
 }
