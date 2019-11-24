@@ -64,6 +64,163 @@ body {
   position: fixed;
   bottom: 0; }
 
+.dice__figure {
+  position: relative; }
+  .dice__figure--active .dice__side-one {
+    animation: roll-dice .4s; }
+  .dice__figure--active .dice__side-two {
+    animation: roll-dice .4s .4s; }
+  .dice__figure--active .dice__side-three {
+    animation: roll-dice .4s 1.2s; }
+  .dice__figure--active .dice__side-four {
+    animation: roll-dice .4s .8s; }
+  .dice__figure--active .dice__side-five {
+    animation: roll-dice .4s 2s; }
+  .dice__figure--active .dice__side-six {
+    animation: roll-dice .4s 1.6s; }
+
+.dice__side {
+  border-radius: 3px;
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 7px auto;
+  box-sizing: border-box;
+  padding: 10px;
+  position: absolute;
+  background-color: #4e8eb4; }
+  .dice__side--active {
+    visibility: visible !important; }
+  .dice__side .dice__dot {
+    border-radius: 50%;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #fff; }
+  .dice__side-start .dice__dot {
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: auto; }
+  .dice__side-one {
+    visibility: hidden;
+    animation: rollDice 2.4s; }
+    .dice__side-one .dice__dot {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto; }
+  .dice__side-two {
+    visibility: hidden; }
+    .dice__side-two .dice__dot:first-child {
+      top: 20px;
+      left: 20px; }
+    .dice__side-two .dice__dot:last-child {
+      bottom: 20px;
+      right: 20px; }
+  .dice__side-three {
+    visibility: hidden; }
+    .dice__side-three .dice__dot:first-child {
+      top: 15px;
+      left: 15px; }
+    .dice__side-three .dice__dot:nth-child(2) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto; }
+    .dice__side-three .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px; }
+  .dice__side-four {
+    visibility: hidden; }
+    .dice__side-four .dice__dot:first-child {
+      top: 15px;
+      left: 15px; }
+    .dice__side-four .dice__dot:nth-child(2) {
+      top: 15px;
+      right: 15px; }
+    .dice__side-four .dice__dot:nth-child(3) {
+      bottom: 15px;
+      left: 15px; }
+    .dice__side-four .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px; }
+  .dice__side-five {
+    visibility: hidden; }
+    .dice__side-five .dice__dot:first-child {
+      top: 15px;
+      left: 15px; }
+    .dice__side-five .dice__dot:nth-child(2) {
+      top: 15px;
+      right: 15px; }
+    .dice__side-five .dice__dot:nth-child(3) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto; }
+    .dice__side-five .dice__dot:nth-child(4) {
+      bottom: 15px;
+      left: 15px; }
+    .dice__side-five .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px; }
+  .dice__side-six {
+    visibility: hidden; }
+    .dice__side-six .dice__dot:first-child {
+      top: 15px;
+      left: 15px; }
+    .dice__side-six .dice__dot:nth-child(2) {
+      top: 15px;
+      right: 15px; }
+    .dice__side-six .dice__dot:nth-child(3) {
+      top: 0;
+      bottom: 0;
+      left: 15px;
+      margin: auto; }
+    .dice__side-six .dice__dot:nth-child(4) {
+      top: 0;
+      right: 15px;
+      bottom: 0;
+      margin: auto; }
+    .dice__side-six .dice__dot:nth-child(5) {
+      bottom: 15px;
+      left: 15px; }
+    .dice__side-six .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px; }
+
+.dice:nth-child(6) .dot:first-child {
+  top: 15px;
+  left: 15px; }
+.dice:nth-child(6) .dot:nth-child(2) {
+  top: 15px;
+  right: 15px; }
+.dice:nth-child(6) .dot:nth-child(3) {
+  top: 0;
+  bottom: 0;
+  left: 15px;
+  margin: auto; }
+.dice:nth-child(6) .dot:nth-child(4) {
+  top: 0;
+  right: 15px;
+  bottom: 0;
+  margin: auto; }
+.dice:nth-child(6) .dot:nth-child(5) {
+  bottom: 15px;
+  left: 15px; }
+.dice:nth-child(6) .dot:last-child {
+  bottom: 15px;
+  right: 15px; }
+
+@keyframes roll-dice {
+  0% {
+    visibility: visible; }
+  100% {
+    visibility: hidden; } }
 .character-select {
   margin-top: 300px;
   margin-bottom: 200px;
@@ -81,9 +238,16 @@ body {
 .begin-btn--hidden {
   visibility: hidden; }
 
-.game__board svg {
-  max-height: 70vh; }
-  .game__board svg .player-token {
-    height: 70px; }
+.game {
+  display: flex;
+  margin: 5em auto;
+  width: 80%;
+  justify-content: space-between; }
+  .game__board svg {
+    width: 100%;
+    max-height: 70vh; }
+    .game__board svg .player-token {
+      height: 70px;
+      transition: all .8s ease; }
 
 /*# sourceMappingURL=main.css.map */

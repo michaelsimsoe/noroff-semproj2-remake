@@ -1,0 +1,225 @@
+.dice__figure {
+  position: relative;
+
+  &--active {
+    & .dice__side {
+      &-one {
+        animation: roll-dice .4s;
+      }
+
+      &-two {
+        animation: roll-dice .4s .4s;
+      }
+
+      &-three {
+        animation: roll-dice .4s 1.2s;
+      }
+
+      &-four {
+        animation: roll-dice .4s .8s;
+      }
+
+      &-five {
+        animation: roll-dice .4s 2s;
+      }
+
+      &-six {
+        animation: roll-dice .4s 1.6s;
+      }
+    }
+  }
+}
+
+.dice__side {
+  border-radius: 3px;
+  display: block;
+  width: 100px;
+  height: 100px;
+  margin: 7px auto;
+  box-sizing: border-box;
+  padding: 10px;
+  position: absolute;
+  background-color: #4e8eb4;
+
+  &--active {
+    visibility: visible !important;
+  }
+
+  & .dice__dot {
+    border-radius: 50%;
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #fff;
+  }
+
+  &-start {
+    & .dice__dot {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+  }
+
+  &-one {
+    visibility: hidden;
+    animation: rollDice 2.4s;
+    & .dice__dot {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+  }
+
+  &-two {
+    visibility: hidden;
+    & .dice__dot:first-child {
+      top: 20px;
+      left: 20px;
+    }
+    & .dice__dot:last-child {
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+
+  &-three {
+    visibility: hidden;
+     & .dice__dot:first-child {
+      top: 15px;
+      left: 15px;
+    }
+    & .dice__dot:nth-child(2) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+    & .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+
+  &-four {
+    visibility: hidden;
+     & .dice__dot:first-child {
+      top: 15px;
+      left: 15px;
+    }
+    & .dice__dot:nth-child(2) {
+      top: 15px;
+      right: 15px;
+    }
+    & .dice__dot:nth-child(3) {
+      bottom: 15px;
+      left: 15px;
+    }
+    & .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+
+  &-five {
+    visibility: hidden;
+    & .dice__dot:first-child {
+      top: 15px;
+      left: 15px;
+    }
+    & .dice__dot:nth-child(2) {
+      top: 15px;
+      right: 15px;
+    }
+    & .dice__dot:nth-child(3) {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      margin: auto;
+    }
+    & .dice__dot:nth-child(4) {
+      bottom: 15px;
+      left: 15px;
+    }
+    & .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+
+  &-six {
+    visibility: hidden;
+    & .dice__dot:first-child {
+      top: 15px;
+      left: 15px;
+    }
+    & .dice__dot:nth-child(2) {
+      top: 15px;
+      right: 15px;
+    }
+    & .dice__dot:nth-child(3) {
+      top: 0;
+      bottom: 0;
+      left: 15px;
+      margin: auto;
+    }
+    & .dice__dot:nth-child(4) {
+      top: 0;
+      right: 15px;
+      bottom: 0;
+      margin: auto;
+    }
+    & .dice__dot:nth-child(5) {
+      bottom: 15px;
+      left: 15px;
+    }
+    & .dice__dot:last-child {
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+}
+
+.dice:nth-child(6) {
+  .dot {
+    &:first-child {
+      top: 15px;
+      left: 15px;
+    }
+    &:nth-child(2) {
+      top: 15px;
+      right: 15px;
+    }
+    &:nth-child(3) {
+      top: 0;
+      bottom: 0;
+      left: 15px;
+      margin: auto;
+    }
+    &:nth-child(4) {
+      top: 0;
+      right: 15px;
+      bottom: 0;
+      margin: auto;
+    }
+    &:nth-child(5) {
+      bottom: 15px;
+      left: 15px;
+    }
+    &:last-child {
+      bottom: 15px;
+      right: 15px;
+    }
+  }
+}
+
+@keyframes roll-dice {
+  0% { visibility: visible; }
+  100% { visibility: hidden; }
+}

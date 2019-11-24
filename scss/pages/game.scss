@@ -1,11 +1,19 @@
 .game {
+  display: flex;
+  margin: 5em auto;
+  width: 80%;
+  justify-content: space-between;
+  
   &__board svg {
+    width: 100%;
     max-height: 70vh;
 
     & {
       .player-token {
         height: 70px;
+        transition: all .8s ease;
       }
     }
   }
+
 }
