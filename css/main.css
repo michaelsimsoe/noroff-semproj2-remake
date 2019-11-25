@@ -65,23 +65,25 @@ body {
   bottom: 0; }
 
 .dice__figure {
-  position: relative; }
+  transform: translateX(25%);
+  height: 150px; }
   .dice__figure--active .dice__side-one {
-    animation: roll-dice .4s; }
+    animation: roll-dice 0.4s; }
   .dice__figure--active .dice__side-two {
-    animation: roll-dice .4s .4s; }
+    animation: roll-dice 0.4s 0.4s; }
   .dice__figure--active .dice__side-three {
-    animation: roll-dice .4s 1.2s; }
+    animation: roll-dice 0.4s 1.2s; }
   .dice__figure--active .dice__side-four {
-    animation: roll-dice .4s .8s; }
+    animation: roll-dice 0.4s 0.8s; }
   .dice__figure--active .dice__side-five {
-    animation: roll-dice .4s 2s; }
+    animation: roll-dice 0.4s 2s; }
   .dice__figure--active .dice__side-six {
-    animation: roll-dice .4s 1.6s; }
+    animation: roll-dice 0.4s 1.6s; }
+.dice__button {
+  position: relative; }
 
 .dice__side {
   border-radius: 3px;
-  display: block;
   width: 100px;
   height: 100px;
   margin: 7px auto;

@@ -1,38 +1,44 @@
-.dice__figure {
-  position: relative;
+.dice {
+  &__figure {
+    transform: translateX(25%);
+    height: 150px;
 
-  &--active {
-    & .dice__side {
-      &-one {
-        animation: roll-dice .4s;
-      }
+    &--active {
+      & .dice__side {
+        &-one {
+          animation: roll-dice 0.4s;
+        }
 
-      &-two {
-        animation: roll-dice .4s .4s;
-      }
+        &-two {
+          animation: roll-dice 0.4s 0.4s;
+        }
 
-      &-three {
-        animation: roll-dice .4s 1.2s;
-      }
+        &-three {
+          animation: roll-dice 0.4s 1.2s;
+        }
 
-      &-four {
-        animation: roll-dice .4s .8s;
-      }
+        &-four {
+          animation: roll-dice 0.4s 0.8s;
+        }
 
-      &-five {
-        animation: roll-dice .4s 2s;
-      }
+        &-five {
+          animation: roll-dice 0.4s 2s;
+        }
 
-      &-six {
-        animation: roll-dice .4s 1.6s;
+        &-six {
+          animation: roll-dice 0.4s 1.6s;
+        }
       }
     }
+  }
+
+  &__button {
+    position: relative;
   }
 }
 
 .dice__side {
   border-radius: 3px;
-  display: block;
   width: 100px;
   height: 100px;
   margin: 7px auto;
@@ -89,7 +95,7 @@
 
   &-three {
     visibility: hidden;
-     & .dice__dot:first-child {
+    & .dice__dot:first-child {
       top: 15px;
       left: 15px;
     }
@@ -108,7 +114,7 @@
 
   &-four {
     visibility: hidden;
-     & .dice__dot:first-child {
+    & .dice__dot:first-child {
       top: 15px;
       left: 15px;
     }
@@ -220,6 +226,10 @@
 }
 
 @keyframes roll-dice {
-  0% { visibility: visible; }
-  100% { visibility: hidden; }
+  0% {
+    visibility: visible;
+  }
+  100% {
+    visibility: hidden;
+  }
 }
