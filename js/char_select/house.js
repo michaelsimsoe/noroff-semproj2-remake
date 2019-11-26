@@ -16,7 +16,7 @@ export class House {
 
   displayCharacters() {
     return `
-      <div>
+      <div data-house="${this.name}">
        ${this.characters[0].displayCharacterCardToDom()}
        ${this.characters[1].displayCharacterCardToDom()}
       </div>

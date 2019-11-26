@@ -5,12 +5,14 @@ export class Trap {
     this.character = character;
     this.consequence = consequence;
   }
-
-  releaseTrap() {
-    alert(`${this.character} has you! ${this.consequence.text}`);
+  announceTrap() {
+    return `${this.character}${this.consequence.text}`;
   }
 
-  announceTrap() {
-    return { type: this.consequence.type, amount: this.consequence.amount };
+  releaseTrap() {
+    return {
+      type: this.consequence.type,
+      amount: this.consequence.amount
+    };
   }
 }

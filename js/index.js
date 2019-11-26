@@ -62,12 +62,13 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
   CHARACTER_CONTAINER.addEventListener('click', function(e) {
     if (e.target.classList.contains('char-select-btn')) {
-      console.log(e.target.parentElement.dataset.character);
-      setPlayer(e.target.parentElement.dataset.character);
+      let player = e.target.parentElement.dataset.character;
+      let house = e.target.parentElement.parentElement.dataset.house;
+      setPlayer(player, house);
     }
   });
 
-  function setPlayer(name) {
+  function setPlayer(name, house) {
     if (playerOneIsSet && playerTwoIsSet) {
       return;
     }
@@ -75,7 +76,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       CHARACTERSTATUS_CONTAINER.querySelector(
         '#select-player-one'
       ).innerHTML = name;
-      localStorage.setItem('player-one', name);
+      localStorage.setItem('player-one', JSON.stringify({ name, house }));
       playerOneIsSet = true;
       return;
     }
@@ -83,7 +84,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       '#select-player-two'
     ).innerHTML = name;
     playerTwoIsSet = true;
-    localStorage.setItem('player-two', name);
+    localStorage.setItem('player-two', JSON.stringify({ name, house }));
     readyToPlay();
     return;
   }
