@@ -1,95 +1,70 @@
-import { Trap } from './game/trap.js';
-const gameTiles = [
-  {
-    x: 170,
-    y: 370,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
+import { gameTiles } from './game/game_tiles.js';
+
+const STATE = {
+  return: {
+    active: false,
+    amount: 0
   },
-  {
-    x: 170,
-    y: 310,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  {
-    x: 140,
-    y: 260,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  {
-    x: 200,
-    y: 260,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  { x: 200, y: 210, trap: '' },
-  {
-    x: 250,
-    y: 170,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  { x: 270, y: 120, trap: '' },
-  { x: 310, y: 80, trap: '' },
-  { x: 310, y: 50, trap: '' },
-  { x: 300, y: 120, trap: '' },
-  { x: 300, y: 200, trap: '' },
-  {
-    x: 260,
-    y: 250,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  { x: 220, y: 300, trap: '' },
-  { x: 200, y: 400, trap: '' },
-  { x: 180, y: 500, trap: '' },
-  {
-    x: 170,
-    y: 450,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  { x: 160, y: 600, trap: '' },
-  { x: 160, y: 680, trap: '' },
-  {
-    x: 170,
-    y: 750,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  { x: 210, y: 820, trap: '' },
-  { x: 270, y: 820, trap: '' },
-  { x: 320, y: 820, trap: '' },
-  { x: 400, y: 820, trap: '' },
-  {
-    x: 310,
-    y: 810,
-    trap: new Trap('TRAP', { text: 'Buhu', type: 'freeze', amount: '2' })
-  },
-  { x: 250, y: 810, trap: '' },
-  { x: 200, y: 810, trap: '' },
-  { x: 160, y: 700, trap: '' },
-  { x: 200, y: 650, trap: '' },
-  {
-    x: 270,
-    y: 610,
-    trap: new Trap('Sandor "The Hound" Clegane', {
-      text:
-        "is charging you. He's massive and angry, and you need to retire back to safety. Back 4 tiles!",
-      type: 'return',
-      amount: '4'
-    })
-  },
-  { x: 320, y: 570, trap: '' }
-];
+  currentPlayer: '',
+  waitingPlayer: '',
+  changePlayer() {
+    console.log('Changing players', STATE.currentPlayer);
+    [this.currentPlayer, this.waitingPlayer] = [
+      this.waitingPlayer,
+      this.currentPlayer
+    ];
+  }
+};
 let moved = 1;
 const DICE_BTN = document.getElementById('dice-btn');
-const TOKEN = document.getElementById('player-token-one');
+
 const STORY_BOARD = document.getElementById('story-board-list');
 const PLAYER_ONE = getPlayerObject('player-one');
 const PLAYER_TWO = getPlayerObject('player-two');
+const WESTERORS_DRAWING = document.getElementById('Layer_2');
 
 document.addEventListener('DOMContentLoaded', async function(event) {
+  setUpPlayerToken(PLAYER_ONE, 'one');
+  setUpPlayerToken(PLAYER_TWO, 'two');
+  const TOKEN_PLAYER_ONE = document.getElementById('player-token-one');
+  const TOKEN_PLAYER_TWO = document.getElementById('player-token-two');
+  STATE.currentPlayer = {
+    name: PLAYER_ONE.name,
+    token: TOKEN_PLAYER_ONE,
+    moved: 1,
+    trapped: 0,
+    rollDiceAgain: false
+  };
+  STATE.waitingPlayer = {
+    name: PLAYER_TWO.name,
+    token: TOKEN_PLAYER_TWO,
+    moved: 1,
+    trapped: 0,
+    rollDiceAgain: false
+  };
+  // STATE.setPlayers();
   DICE_BTN.addEventListener('click', function(e) {
     DICE_BTN.disabled = true;
     checkActiveDiceSideAndRemove();
-    rollDiceAndMove(TOKEN);
+    rollDiceAndMove(STATE.currentPlayer.token);
   });
 });
+
+function setUpPlayerToken(player, num) {
+  let houseName = player.house
+    .replace(/ /g, '_')
+    .replace(/\'/g, '')
+    .toLowerCase();
+  let token = ` <image
+            class="player-token"
+            id="player-token-${num}"
+            x="170"
+            y="370"
+            xlink:href="assets/sigils/${houseName}_small.svg"
+          ></image>`;
+  WESTERORS_DRAWING.insertAdjacentHTML('afterend', token);
+  return;
+}
 
 function getPlayerObject(player) {
   let fetchedPlayer = localStorage.getItem(player);
@@ -115,6 +90,7 @@ function addGameInteraction(interaction) {
 }
 
 function moveToken(token, pos) {
+  console.log('moveToken', STATE.currentPlayer.moved);
   if (!pos) return; // Return if there are no more moves left in gameTiles
   token.setAttribute('x', pos.x);
   token.setAttribute('y', pos.y);
@@ -144,6 +120,7 @@ function checkForSix(moves) {
   if (moves === 6) {
     return true;
   }
+  return false;
 }
 
 function checkForTraps(pos) {
@@ -152,13 +129,17 @@ function checkForTraps(pos) {
     let trap = pos.trap.releaseTrap();
     switch (trap.type) {
       case 'freeze':
+        STATE.currentPlayer.trapped = trap.amount;
         addGameInteraction(
-          `current player needs to stay for ${trap.amount} turns.`
+          `${STATE.currentPlayer.name} needs to stay for ${trap.amount} turns.`
         );
         break;
       case 'return':
+        STATE.return.active = true;
+        STATE.return.amount = trap.amount;
+        moveTileBackwards();
         addGameInteraction(
-          `current player needs to go back ${trap.amount} tiles.`
+          `${STATE.currentPlayer.name}  needs to go back ${trap.amount} tiles.`
         );
         break;
       default:
@@ -171,43 +152,99 @@ function enableDiceBtn() {
   DICE_BTN.disabled = false;
 }
 
-function endGame() {
-  if (moved >= 30) {
+function checkForEndGame(moves) {
+  if (STATE.currentPlayer.moved >= 30) {
     addGameInteraction('Winner winner chicken dinner');
+  } else {
+    setTimeout(() => {
+      enableDiceBtn();
+    }, 800 * moves);
   }
 }
 
 function rollDiceAndMove(token) {
-  if (moved >= 30) return;
+  checkIfPlayerIsTrapped();
   addAnimationClass();
 
   setTimeout(() => {
     let moves = getRandomDiceResult();
-    if (moves + moved >= 30) {
-      moves = moves - (moves + moved - 30);
-    }
-    document
-      .querySelector(`.dice__side-${diceNumberToString(moves)}`)
-      .classList.add('dice__side--active');
 
-    for (let i = 0; i < moves; i++) {
-      (function(i, moveCount) {
-        moved++;
-        setTimeout(() => {
-          moveToken(token, gameTiles[moveCount]);
-        }, 801 * i);
-      })(i, moved);
-    }
+    STATE.currentPlayer.rollDiceAgain = checkForSix(moves);
+
+    checkIfPlannedMoveIsPastEnd(moves);
+
+    resetDice(moves);
+
+    moveTileForwards(moves);
+
+    checkForEndGame(moves);
+
     setTimeout(() => {
-      endGame();
-      enableDiceBtn();
+      checkForTraps(gameTiles[STATE.currentPlayer.moved]);
     }, 800 * moves);
-    if (checkForSix(moves)) {
-      addGameInteraction('Six, player goes again');
-    }
+
     setTimeout(() => {
-      checkForTraps(gameTiles[moved]);
+      if (STATE.currentPlayer.rollDiceAgain) {
+        addGameInteraction('Six, player goes again');
+      } else {
+        if (STATE.return.active) {
+          console.log('ACTIVE', STATE.currentPlayer);
+          STATE.return.amount = 0;
+          STATE.return.active = false;
+          // STATE.changePlayer();
+
+          return;
+        } else {
+          // STATE.changePlayer();
+        }
+      }
     }, 800 * moves);
     removeAnimationClass();
   }, 2400);
+}
+
+function moveTileForwards(moves) {
+  for (let i = 0; i < moves; i++) {
+    (function(i, moveCount) {
+      STATE.currentPlayer.moved++;
+      setTimeout(() => {
+        moveToken(STATE.currentPlayer.token, gameTiles[moveCount]);
+      }, 801 * i);
+    })(i, STATE.currentPlayer.moved);
+  }
+}
+
+function moveTileBackwards() {
+  console.log('moveTileBackwards', STATE.currentPlayer.moved);
+  for (let i = STATE.return.amount; i > 0; --i) {
+    (function(i) {
+      setTimeout(() => {
+        moveToken(
+          STATE.currentPlayer.token,
+          gameTiles[STATE.currentPlayer.moved]
+        );
+      }, 801 * i);
+    })(i);
+  }
+}
+
+function checkIfPlayerIsTrapped() {
+  if (STATE.currentPlayer.trapped > 0) {
+    STATE.currentPlayer.trapped--;
+    // STATE.changePlayer();
+    enableDiceBtn();
+    return;
+  }
+}
+
+function resetDice(moves) {
+  document
+    .querySelector(`.dice__side-${diceNumberToString(moves)}`)
+    .classList.add('dice__side--active');
+}
+
+function checkIfPlannedMoveIsPastEnd(moves) {
+  if (moves + STATE.currentPlayer.moved >= 30) {
+    moves = moves - (moves + STATE.currentPlayer.moved - 30);
+  }
 }
