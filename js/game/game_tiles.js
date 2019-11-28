@@ -1,13 +1,13 @@
 import { Trap } from './trap.js';
 export const gameTiles = [
   {
-    x: 170,
-    y: 370,
+    x: 150,
+    y: 330,
     trap: ''
   },
   {
-    x: 170,
-    y: 310,
+    x: 160,
+    y: 300,
     trap: ''
   },
   {

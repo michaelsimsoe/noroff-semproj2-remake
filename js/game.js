@@ -8,7 +8,6 @@ const STATE = {
   currentPlayer: '',
   waitingPlayer: '',
   changePlayer() {
-    console.log('Changing players', STATE.currentPlayer);
     [this.currentPlayer, this.waitingPlayer] = [
       this.waitingPlayer,
       this.currentPlayer
@@ -31,18 +30,17 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   STATE.currentPlayer = {
     name: PLAYER_ONE.name,
     token: TOKEN_PLAYER_ONE,
-    moved: 1,
+    moved: 0,
     trapped: 0,
     rollDiceAgain: false
   };
   STATE.waitingPlayer = {
     name: PLAYER_TWO.name,
     token: TOKEN_PLAYER_TWO,
-    moved: 1,
+    moved: 0,
     trapped: 0,
     rollDiceAgain: false
   };
-  // STATE.setPlayers();
   DICE_BTN.addEventListener('click', function(e) {
     DICE_BTN.disabled = true;
     checkActiveDiceSideAndRemove();
@@ -89,9 +87,9 @@ function addGameInteraction(interaction) {
   );
 }
 
-function moveToken(token, pos) {
-  console.log('moveToken', STATE.currentPlayer.moved);
+function moveTokenTo(token, pos, dir = 'FORWARDS') {
   if (!pos) return; // Return if there are no more moves left in gameTiles
+  console.log(dir);
   token.setAttribute('x', pos.x);
   token.setAttribute('y', pos.y);
   return;
@@ -137,6 +135,8 @@ function checkForTraps(pos) {
       case 'return':
         STATE.return.active = true;
         STATE.return.amount = trap.amount;
+        console.log('TRAP', trap);
+        console.log('POSITION', pos);
         moveTileBackwards();
         addGameInteraction(
           `${STATE.currentPlayer.name}  needs to go back ${trap.amount} tiles.`
@@ -169,16 +169,21 @@ function rollDiceAndMove(token) {
   setTimeout(() => {
     let moves = getRandomDiceResult();
 
+    // If player rolls a six, store a status in rollDiceAgain
     STATE.currentPlayer.rollDiceAgain = checkForSix(moves);
 
-    checkIfPlannedMoveIsPastEnd(moves);
+    // Check if player is to close to the last tile to complete all moves
+    moves = checkIfPlannedMoveIsPastEnd(moves);
 
     resetDice(moves);
 
+    // Move the player
     moveTileForwards(moves);
 
+    // Checks if current player is at tile 30, if not it enables the dice button
     checkForEndGame(moves);
 
+    // After all move animations have ended, check if final tile contains trap
     setTimeout(() => {
       checkForTraps(gameTiles[STATE.currentPlayer.moved]);
     }, 800 * moves);
@@ -187,11 +192,10 @@ function rollDiceAndMove(token) {
       if (STATE.currentPlayer.rollDiceAgain) {
         addGameInteraction('Six, player goes again');
       } else {
-        if (STATE.return.active) {
-          console.log('ACTIVE', STATE.currentPlayer);
-          STATE.return.amount = 0;
-          STATE.return.active = false;
-          // STATE.changePlayer();
+        if (!STATE.return.active) {
+          // STATE.return.amount = 0;
+          // STATE.return.active = false;
+          STATE.changePlayer();
 
           return;
         } else {
@@ -208,21 +212,31 @@ function moveTileForwards(moves) {
     (function(i, moveCount) {
       STATE.currentPlayer.moved++;
       setTimeout(() => {
-        moveToken(STATE.currentPlayer.token, gameTiles[moveCount]);
+        moveTokenTo(STATE.currentPlayer.token, gameTiles[moveCount]);
       }, 801 * i);
     })(i, STATE.currentPlayer.moved);
   }
 }
 
 function moveTileBackwards() {
-  console.log('moveTileBackwards', STATE.currentPlayer.moved);
-  for (let i = STATE.return.amount; i > 0; --i) {
+  for (let i = 0; i <= STATE.return.amount; i++) {
+    console.log(i);
     (function(i) {
       setTimeout(() => {
-        moveToken(
+        STATE.currentPlayer.moved--;
+        moveTokenTo(
           STATE.currentPlayer.token,
-          gameTiles[STATE.currentPlayer.moved]
+          gameTiles[STATE.currentPlayer.moved],
+          'BACKWARDS'
         );
+        if (i === 2) {
+          STATE.currentPlayer.moved++;
+          console.log('CHANGING');
+          STATE.return.amount = 0;
+          STATE.return.active = false;
+          STATE.changePlayer();
+          console.log(STATE);
+        }
       }, 801 * i);
     })(i);
   }
@@ -247,4 +261,5 @@ function checkIfPlannedMoveIsPastEnd(moves) {
   if (moves + STATE.currentPlayer.moved >= 30) {
     moves = moves - (moves + STATE.currentPlayer.moved - 30);
   }
+  return moves;
 }
