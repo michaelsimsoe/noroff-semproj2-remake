@@ -154,7 +154,11 @@ function enableDiceBtn() {
 
 function checkForEndGame(moves) {
   if (STATE.currentPlayer.moved >= 30) {
-    addGameInteraction('Winner winner chicken dinner');
+    addGameInteraction(`${STATE.currentPlayer.name} has won the throne!`);
+    setWinner(STATE.currentPlayer.name);
+    setTimeout(() => {
+      redircetToFinale();
+    }, 4000);
   } else {
     setTimeout(() => {
       enableDiceBtn();
@@ -262,4 +266,12 @@ function checkIfPlannedMoveIsPastEnd(moves) {
     moves = moves - (moves + STATE.currentPlayer.moved - 30);
   }
   return moves;
+}
+
+function setWinner(player) {
+  localStorage.setItem('winner', JSON.stringify({ player }));
+}
+
+function redircetToFinale() {
+  window.location.href = '/finale.html';
 }

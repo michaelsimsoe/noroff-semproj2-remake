@@ -1,0 +1,29 @@
+/*------------------------------------*\
+  #GAME INTERACTION LIST
+\*------------------------------------*/
+
+.game__interactions {
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 250px;
+  max-height: 100%;
+  justify-content: space-between;
+  .story-board {
+    max-height: 70%;
+    overflow: scroll;
+    &__list {
+    }
+    &__item {
+      animation: pop .5s forwards;
+    }
+  }
+}
+@keyframes pop {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 100%;
+  }
+}

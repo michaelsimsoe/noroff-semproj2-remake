@@ -1,10 +1,13 @@
 .dice {
+  display: flex;
+  flex-direction: column;
   &__figure {
-    transform: translateX(25%);
-    height: 150px;
+    height: 130px;
+    position: relative;
 
     &--active {
       & .dice__side {
+
         &-one {
           animation: roll-dice 0.4s;
         }
@@ -41,10 +44,12 @@
   border-radius: 3px;
   width: 100px;
   height: 100px;
-  margin: 7px auto;
+  margin: auto;
   box-sizing: border-box;
   padding: 10px;
   position: absolute;
+  left: 0;
+  right: 0;
   background-color: #4e8eb4;
 
   &--active {

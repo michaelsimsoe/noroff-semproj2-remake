@@ -1,26 +1,31 @@
+.game-page {
+  overflow: hidden;
+}
 .game {
   display: flex;
   margin: 5em auto;
-  width: 80%;
+  width: 70%;
   justify-content: space-between;
-
   &__interactions {
-    .story-board {
-      &__list {}
-      &__item {}
-    }
+    flex-grow: 1;
   }
-  
-  &__board svg {
-    width: 100%;
-    max-height: 70vh;
 
-    & {
-      .player-token {
-        height: 70px;
-        transition: all .8s ease;
+  &__board {
+    flex-grow: 2;
+    & svg {
+      width: 100%;
+      max-height: 70vh;
+
+      & {
+        .player-token {
+          height: 70px;
+          transition: all 0.8s ease;
+        }
       }
     }
   }
 
+  &__player-cards {
+    flex-grow: 1;
+  }
 }
