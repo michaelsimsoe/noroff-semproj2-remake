@@ -1,11 +1,33 @@
 .finale {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   &__throne {
     width: 70%;
     margin: 0 auto;
     display: flex;
+
     & > svg {
       height: 70vh;
       margin: 0 auto;
+      filter: drop-shadow(0 0 40px #4444dd);
+      animation: pulsate 3s infinite;
+
+      & image {
+        height: 240px;
+      }
     }
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    filter: drop-shadow(0 0 20px #4444dd);
+  }
+  50% {
+    filter: drop-shadow(0 0 90px #4444dd);
+  }
+  100% {
+    filter: drop-shadow(0 0 20px #4444dd);
   }
 }

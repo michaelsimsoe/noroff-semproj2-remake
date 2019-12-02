@@ -3,10 +3,12 @@ export class Character {
   gender = '';
   culture = '';
   titles = [];
+  house = '';
 
   constructor(data) {
     this.name = data.name;
     this.gender = data.gender;
+    this.house = data.house ? data.house : 'The Common people';
   }
 
   displayCharacterCardToDom() {

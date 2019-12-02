@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   const TOKEN_PLAYER_TWO = document.getElementById('player-token-two');
   STATE.currentPlayer = {
     name: PLAYER_ONE.name,
+    house: PLAYER_ONE.house,
     token: TOKEN_PLAYER_ONE,
     moved: 0,
     trapped: 0,
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   };
   STATE.waitingPlayer = {
     name: PLAYER_TWO.name,
+    house: PLAYER_TWO.house,
     token: TOKEN_PLAYER_TWO,
     moved: 0,
     trapped: 0,
@@ -155,7 +157,10 @@ function enableDiceBtn() {
 function checkForEndGame(moves) {
   if (STATE.currentPlayer.moved >= 30) {
     addGameInteraction(`${STATE.currentPlayer.name} has won the throne!`);
-    setWinner(STATE.currentPlayer.name);
+    setWinner({
+      name: STATE.currentPlayer.name,
+      house: STATE.currentPlayer.house
+    });
     setTimeout(() => {
       redircetToFinale();
     }, 4000);
