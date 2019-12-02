@@ -1,0 +1,11 @@
+.finale {
+  &__throne {
+    width: 70%;
+    margin: 0 auto;
+    display: flex;
+    & > svg {
+      height: 70vh;
+      margin: 0 auto;
+    }
+  }
+}
