@@ -56,6 +56,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       let houseName = e.path.find(el => el.dataset.name).dataset.name;
       let currentHouse = houseArray.find(house => house.name === houseName);
       CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
+      CHARACTER_CONTAINER.scrollIntoView();
     },
     false
   );

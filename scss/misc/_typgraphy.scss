@@ -12,7 +12,7 @@ button,
 input,
 select,
 textarea {
-  font-family: '', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   line-height: 1.6;
 }
@@ -25,7 +25,8 @@ h5,
 h6 {
   clear: both;
   // color: var(--primary-color-1-1);
-  font-family: '', serif;
+  font-family: 'Cinzel', serif;
+  // text-transform: uppercase;
 }
 
 a {

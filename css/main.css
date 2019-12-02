@@ -9,7 +9,8 @@ body {
   #BASE
 \*------------------------------------*/
 html {
-  box-sizing: border-box; }
+  box-sizing: border-box;
+  scroll-behavior: smooth; }
 
 *, *:before, *:after {
   box-sizing: inherit; }
@@ -38,7 +39,7 @@ button,
 input,
 select,
 textarea {
-  font-family: '', serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   line-height: 1.6; }
 
@@ -49,7 +50,7 @@ h4,
 h5,
 h6 {
   clear: both;
-  font-family: '', serif; }
+  font-family: 'Cinzel', serif; }
 
 p {
   margin-bottom: 1.5em;
@@ -126,13 +127,31 @@ h4 {
 .main-header {
   width: 100vw;
   height: 100px; }
-  .main-header svg {
+  .main-header .logo {
+    position: absolute;
+    top: 20px;
+    left: 20px; }
+    .main-header .logo__text {
+      text-align: center;
+      position: relative;
+      top: -100px;
+      color: red;
+      font-weight: bold;
+      font-size: 0.9rem;
+      max-width: 100px; }
+    .main-header .logo svg {
+      max-width: 140px;
+      position: relative; }
+  .main-header #duck {
     width: 100vw;
-    position: absolute; }
+    position: absolute;
+    filter: drop-shadow(3px 3px 3px black); }
   .main-header__hamburger {
     width: 60px;
     height: 45px;
-    position: relative;
+    position: absolute;
+    right: 20px;
+    top: 20px;
     transform: rotate(0deg);
     transition: 0.5s ease-in-out;
     margin-right: 0.5rem; }
@@ -155,11 +174,12 @@ h4 {
       top: 36px; }
     .main-header__hamburger h4 {
       position: absolute;
-      top: 26px;
+      top: 42px;
       text-transform: uppercase;
       font-family: 'Exo', sans-serif;
       letter-spacing: .25em;
-      transition: transform .25s ease; }
+      transition: transform .25s ease;
+      font-size: .9em; }
     .main-header__hamburger.open h4 {
       transform: scale(0); }
     .main-header__hamburger.open span:nth-child(1) {
@@ -368,7 +388,7 @@ h4 {
   to {
     opacity: 100%; } }
 .character-select {
-  margin-top: 300px;
+  margin-top: 120px;
   margin-bottom: 200px;
   width: 100vw; }
   .character-select .houses, .character-select .character-select__characters {
@@ -376,13 +396,39 @@ h4 {
     width: 80%;
     display: flex;
     justify-content: space-between; }
-    .character-select .houses div, .character-select .character-select__characters div {
+    .character-select .houses > div, .character-select .character-select__characters > div {
       margin: 10px; }
+      .character-select .houses > div > .character-card, .character-select .character-select__characters > div > .character-card {
+        box-shadow: 3px 3px 3px 3px black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 10px; }
+        .character-select .houses > div > .character-card img, .character-select .character-select__characters > div > .character-card img {
+          height: 100px;
+          margin: 20px 10px 10px; }
+        .character-select .houses > div > .character-card h3, .character-select .character-select__characters > div > .character-card h3 {
+          text-align: center;
+          margin: 5px 10px; }
+  .character-select .houses__house {
+    width: 20%; }
+    .character-select .houses__house h3 {
+      height: 170px; }
+    .character-select .houses__house figure img {
+      max-width: 200px;
+      filter: drop-shadow(3px 3px 3px black); }
   .character-select .character-select__characters {
     width: 30%; }
+    .character-select .character-select__characters > div {
+      display: flex; }
+  .character-select .char-select-btn {
+    width: 100%; }
 
-.begin-btn--hidden {
-  visibility: hidden; }
+.character-status {
+  display: flex;
+  justify-content: center; }
+  .character-status .begin-btn--hidden {
+    visibility: hidden; }
 
 .game-page {
   overflow: hidden; }
@@ -404,5 +450,29 @@ h4 {
         transition: all 0.8s ease; }
   .game__player-cards {
     flex-grow: 1; }
+
+.finale {
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+  .finale__throne {
+    width: 70%;
+    margin: 0 auto;
+    display: flex; }
+    .finale__throne > svg {
+      height: 70vh;
+      margin: 0 auto;
+      filter: drop-shadow(0 0 40px #4444dd);
+      animation: pulsate 3s infinite; }
+      .finale__throne > svg image {
+        height: 240px; }
+
+@keyframes pulsate {
+  0% {
+    filter: drop-shadow(0 0 20px #4444dd); }
+  50% {
+    filter: drop-shadow(0 0 90px #4444dd); }
+  100% {
+    filter: drop-shadow(0 0 20px #4444dd); } }
 
 /*# sourceMappingURL=main.css.map */

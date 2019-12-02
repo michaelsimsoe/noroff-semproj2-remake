@@ -6,7 +6,7 @@ export class House {
     this.name = house.name;
   }
   displayHouseSigilToDom() {
-    return `<div class="house" data-name="${this.name}">
+    return `<div class="houses__house" data-name="${this.name}">
       <h3>${this.name}</h3>
       <figure>
         <img src="assets/sigils/${this.getSigilPath()}.svg" alt=""/>

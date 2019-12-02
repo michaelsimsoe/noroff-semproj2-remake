@@ -1,32 +1,67 @@
 .character-select {
-  margin-top: 300px;
+  margin-top: 120px;
   margin-bottom: 200px;
   width: 100vw;
-  
+
   & .houses,
   & .character-select__characters {
     margin: 0 auto;
     width: 80%;
     display: flex;
     justify-content: space-between;
-    & div {
+    & > div {
       margin: 10px;
+      & > .character-card {
+        box-shadow: $box-shadow;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 10px;
+        & img {
+          height: 100px;
+          margin: 20px 10px 10px;
+        }
+        & h3 {
+          text-align: center;
+          margin: 5px 10px;
+        }
+      }
+    }
+  }
+
+  & .houses {
+    &__house {
+      width: 20%;
+      & h3 {
+        height: 170px;
+      }
+      & figure {
+        img {
+          max-width: 200px;
+          filter: drop-shadow(3px 3px 3px black);
+        }
+      }
     }
   }
 
   & .character-select__characters {
     width: 30%;
-
+    & > div {
+      display: flex;
+    }
   }
 
-
-
-}
-
-.begin-btn {
-
-  &--hidden {
-    visibility: hidden;
+  .char-select-btn {
+    width: 100%;
   }
 }
 
+.character-status {
+  display: flex;
+  justify-content: center;;
+  .begin-btn {
+    &--hidden {
+      visibility: hidden;
+    }
+  }
+}
