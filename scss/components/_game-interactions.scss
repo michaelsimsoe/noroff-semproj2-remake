@@ -37,6 +37,10 @@
     &__item {
       animation: pop .5s forwards;
     }
+
+    &__item:nth-child(odd) {
+      background-color: red;
+    }
   }
 }
 @keyframes pop {

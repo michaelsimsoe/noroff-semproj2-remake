@@ -39,6 +39,14 @@
         img {
           max-width: 200px;
           filter: drop-shadow(3px 3px 3px black);
+
+          &:hover {
+            filter: drop-shadow(5px 6px 6px black);
+          }
+
+          &:active {
+            filter: drop-shadow(1px 1px 1px black);
+          }
         }
       }
     }

@@ -10,13 +10,18 @@
     & > svg {
       height: 70vh;
       margin: 0 auto;
-      filter: drop-shadow(0 0 40px #4444dd);
       animation: pulsate 3s infinite;
 
       & image {
         height: 240px;
       }
     }
+  }
+  & .play-again-btn {
+    text-decoration: none;;
+    margin: 3em;  
+    padding: 1em;
+    box-shadow: $box-shadow;
   }
 }
 
