@@ -1,0 +1,15 @@
+.alert-message {
+  &--hidden {
+    opacity: 0;
+    transform: translateY(300px);
+  }
+  transition: all .8s ease-in-out;
+  position: fixed;
+  bottom: 8px;
+  left: 8px;
+  width: 25vw;
+  min-height: 100px;
+  padding: 2em;
+  background-color: red;
+  box-shadow: $box-shadow;
+}

@@ -59,9 +59,35 @@
 .character-status {
   display: flex;
   justify-content: center;;
+  
+  
+  &__player {
+    &--hidden {
+      opacity: 0;
+    }
+
+    margin: 2em;
+    padding: 2em;
+    box-shadow: $box-shadow;
+    transition: all .3s ease-in;
+  }
   .begin-btn {
+    margin: 2em;
+    padding: 2em;
+    box-shadow: $box-shadow;
+    background-color: red;
+    border: none;
+    transition: transform .4s ease-in, opacity .3s ease;
+    text-decoration: none;;
+
     &--hidden {
       visibility: hidden;
+      transform: translateX(400px);
+      opacity: 0;
+    }
+
+    &:hover {
+      background-color: darkred;
     }
   }
 }

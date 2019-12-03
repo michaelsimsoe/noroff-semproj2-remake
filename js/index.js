@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   let playerTwoIsSet = false;
   const hamburgerMenu = document.getElementById('menu');
   const CHARACTERSTATUS_CONTAINER = document.getElementById('character-status');
+  const ALERT_MSG = document.getElementById('alert-msg');
   let PLAYER_ONE = '';
   let PLAYER_TWO = '';
   hamburgerMenu.addEventListener('click', function(event) {
@@ -69,21 +70,53 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     }
   });
 
+  function isPlayerTaken(player) {
+    const playerOne = CHARACTERSTATUS_CONTAINER.querySelector(
+      '#select-player-one'
+    ).innerHTML;
+    const playerTwo = CHARACTERSTATUS_CONTAINER.querySelector(
+      '#select-player-two'
+    ).innerHTML;
+
+    if (player == playerOne || player == playerTwo) {
+      displayAlertMsg(
+        `${player} is allready chosen. Please try one of the others.`
+      );
+      hideAlertMSg();
+      return true;
+    }
+  }
+
+  function displayAlertMsg(msg) {
+    ALERT_MSG.classList.remove('alert-message--hidden');
+    ALERT_MSG.querySelector('.alert-message__message').innerHTML = `
+      <h3>Woops!</h3>
+      <p>${msg}</p>
+    `;
+  }
+  function hideAlertMSg() {
+    setTimeout(() => {
+      ALERT_MSG.classList.add('alert-message--hidden');
+      ALERT_MSG.querySelector('.alert-message__message').innerHTML = '';
+    }, 3000);
+  }
+
   function setPlayer(name, house) {
+    if (isPlayerTaken(name)) return;
     if (playerOneIsSet && playerTwoIsSet) {
       return;
     }
     if (!playerOneIsSet) {
-      CHARACTERSTATUS_CONTAINER.querySelector(
-        '#select-player-one'
-      ).innerHTML = name;
+      let one = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-one');
+      one.classList.remove('character-status__player--hidden');
+      one.innerHTML = name;
       localStorage.setItem('player-one', JSON.stringify({ name, house }));
       playerOneIsSet = true;
       return;
     }
-    CHARACTERSTATUS_CONTAINER.querySelector(
-      '#select-player-two'
-    ).innerHTML = name;
+    let two = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-two');
+    two.innerHTML = name;
+    two.classList.remove('character-status__player--hidden');
     playerTwoIsSet = true;
     localStorage.setItem('player-two', JSON.stringify({ name, house }));
     readyToPlay();
