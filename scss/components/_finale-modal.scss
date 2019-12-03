@@ -1,0 +1,33 @@
+.finale-modal {
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(179, 179, 179, 0.5);
+  transform: translateY(-3000px);
+  transition: all .8s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &--active {
+    transform: translateY(0px);
+  }
+
+  &__content {
+    text-align: center;
+    background-color: #141414;
+    padding: 3em;
+    color: #fff;
+    box-shadow: $box-shadow;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: columtn;
+    justify-content: center;
+    align-items: center;
+    & h2 {
+      text-transform: uppercase;
+    }
+  }
+}

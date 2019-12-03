@@ -3,16 +3,36 @@
 \*------------------------------------*/
 
 .game__interactions {
+  box-shadow: $box-shadow;
   display: flex;
   flex-direction: column;
-  min-width: 250px;
-  max-width: 250px;
-  max-height: 100%;
   justify-content: space-between;
+  width: 30%;
+  max-height: 70vh;
   .story-board {
-    max-height: 70%;
+    max-height: 60%;
     overflow: scroll;
+
+    &::-webkit-scrollbar {
+      width: 1em;
+    }
+    // scrollbar-width: 2em;
+    // scrollbar-color: blue green;
+    &::-webkit-scrollbar-thumb {
+      background-color: grey;
+      border-radius: 3px;
+    }
+
+    & h2 {
+      text-align: center;
+      text-transform: uppercase;
+      position: sticky;
+      top: 0px;
+      background-color: #fff;
+      z-index: 5;
+    }
     &__list {
+      padding: 2em;
     }
     &__item {
       animation: pop .5s forwards;
@@ -22,8 +42,10 @@
 @keyframes pop {
   from {
     opacity: 0;
+    transform: translateX(-300px);
   }
   to {
     opacity: 100%;
+    transform: translateX(0px);
   }
 }

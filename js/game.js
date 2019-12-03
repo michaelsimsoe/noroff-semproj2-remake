@@ -12,12 +12,28 @@ const STATE = {
       this.waitingPlayer,
       this.currentPlayer
     ];
+    this.currentPlayer.card.classList.add('card--active');
+    this.waitingPlayer.card.classList.remove('card--active');
+  },
+  updatePlayerCard() {
+    const name = this.currentPlayer.card.querySelector('h3');
+    const house = this.currentPlayer.card.querySelector('h4');
+    const position = this.currentPlayer.card.querySelector('span');
+
+    name.innerHTML = `${this.currentPlayer.name}`;
+    house.innerHTML = `of ${this.currentPlayer.house}`;
+    position.innerHTML = `${
+      gameTiles[this.currentPlayer.moved].position
+        ? gameTiles[this.currentPlayer.moved].position
+        : 'unknown'
+    }`;
   }
 };
 let moved = 1;
 const DICE_BTN = document.getElementById('dice-btn');
 
 const STORY_BOARD = document.getElementById('story-board-list');
+const FINALE_MODAL = document.getElementById('finale-modal');
 const PLAYER_ONE = getPlayerObject('player-one');
 const PLAYER_TWO = getPlayerObject('player-two');
 const WESTERORS_DRAWING = document.getElementById('Layer_2');
@@ -27,10 +43,13 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   setUpPlayerToken(PLAYER_TWO, 'two');
   const TOKEN_PLAYER_ONE = document.getElementById('player-token-one');
   const TOKEN_PLAYER_TWO = document.getElementById('player-token-two');
+  const PLAYER_ONE_CARD = document.getElementById('player-one-card');
+  const PLAYER_TWO_CARD = document.getElementById('player-two-card');
   STATE.currentPlayer = {
     name: PLAYER_ONE.name,
     house: PLAYER_ONE.house,
     token: TOKEN_PLAYER_ONE,
+    card: PLAYER_ONE_CARD,
     moved: 0,
     trapped: 0,
     rollDiceAgain: false
@@ -39,6 +58,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     name: PLAYER_TWO.name,
     house: PLAYER_TWO.house,
     token: TOKEN_PLAYER_TWO,
+    card: PLAYER_TWO_CARD,
     moved: 0,
     trapped: 0,
     rollDiceAgain: false
@@ -137,8 +157,6 @@ function checkForTraps(pos) {
       case 'return':
         STATE.return.active = true;
         STATE.return.amount = trap.amount;
-        console.log('TRAP', trap);
-        console.log('POSITION', pos);
         moveTileBackwards();
         addGameInteraction(
           `${STATE.currentPlayer.name}  needs to go back ${trap.amount} tiles.`
@@ -214,6 +232,7 @@ function rollDiceAndMove(token) {
     }, 800 * moves);
     removeAnimationClass();
   }, 2400);
+  STATE.updatePlayerCard();
 }
 
 function moveTileForwards(moves) {
@@ -275,6 +294,12 @@ function checkIfPlannedMoveIsPastEnd(moves) {
 
 function setWinner(player) {
   localStorage.setItem('winner', JSON.stringify({ player }));
+  displayWinnerModal(player);
+}
+
+function displayWinnerModal(player) {
+  document.getElementById('game-winner').innerHTML = player.name;
+  FINALE_MODAL.classList.add('finale-modal--active');
 }
 
 function redircetToFinale() {
