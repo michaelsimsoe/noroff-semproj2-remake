@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   const hamburgerMenu = document.getElementById('menu');
   const CHARACTERSTATUS_CONTAINER = document.getElementById('character-status');
   const ALERT_MSG = document.getElementById('alert-msg');
+  const BEGIN_BUTTON = document.getElementById('begin-btn');
   let PLAYER_ONE = '';
   let PLAYER_TWO = '';
 
@@ -56,7 +57,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       let houseName = e.path.find(el => el.dataset.name).dataset.name;
       let currentHouse = houseArray.find(house => house.name === houseName);
       CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
-      CHARACTER_CONTAINER.scrollIntoView();
+      HOUSES_CONTAINER.scrollIntoView();
     },
     false
   );
@@ -77,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       '#select-player-two'
     ).innerHTML;
 
-    if (player == playerOne || player == playerTwo) {
+    if (playerOne.match(player) || playerTwo.match(player)) {
       displayAlertMsg(
         `${player} is allready chosen. Please try one of the others.`
       );
@@ -96,34 +97,35 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   function hideAlertMSg() {
     setTimeout(() => {
       ALERT_MSG.classList.add('alert-message--hidden');
-      ALERT_MSG.querySelector('.alert-message__message').innerHTML = '';
     }, 3000);
   }
 
   function setPlayer(name, house) {
-    if (isPlayerTaken(name)) return;
     if (playerOneIsSet && playerTwoIsSet) {
       return;
     }
     if (!playerOneIsSet) {
       let one = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-one');
       one.classList.remove('character-status__player--hidden');
-      one.innerHTML = name;
+      one.innerHTML = `<h4>Player One</h4><p>${name}</p>`;
       localStorage.setItem('player-one', JSON.stringify({ name, house }));
       playerOneIsSet = true;
       return;
     }
+    if (isPlayerTaken(name)) return;
     let two = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-two');
-    two.innerHTML = name;
+    two.innerHTML = `<h4>Player Two</h4><p>${name}</p>`;
     two.classList.remove('character-status__player--hidden');
     playerTwoIsSet = true;
     localStorage.setItem('player-two', JSON.stringify({ name, house }));
+    BEGIN_BUTTON.scrollIntoView();
+
     readyToPlay();
     return;
   }
 
   function readyToPlay() {
-    document.getElementById('begin-btn').classList.remove('begin-btn--hidden');
+    BEGIN_BUTTON.classList.remove('begin-btn--hidden');
   }
 });
 

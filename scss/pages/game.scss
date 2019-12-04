@@ -1,3 +1,6 @@
+/*------------------------------------*\
+  #GAME PAGE
+\*------------------------------------*/
 .game-page {
   overflow: hidden;
   max-height: 100vh;
@@ -37,7 +40,12 @@
       transition: all .4s ease-in;
       min-width: 300px;;
       &--active {
-        background-color: red;
+        background-color: $primary-color;
+        color: $background-color;
+      }
+
+      & h3 {
+        border-bottom: 2px $golden-font solid;
       }
     }
   }

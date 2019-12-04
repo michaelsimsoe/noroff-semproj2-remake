@@ -1,3 +1,4 @@
+import { navigation } from './util/navigation.js';
 document.addEventListener('DOMContentLoaded', function(e) {
   const RETRY_BUTTON = document.getElementById('play-again-btn');
   const winnerHeading = document.getElementById('finale-sub-heading');
@@ -6,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function(e) {
   winnerHeading.innerHTML = `${winner.name} of ${winner.house}`;
   setWinnerSigil(winner.house);
   scrollToButton();
-
+  navigation();
   function getWinner() {
     let fetchedWinner = localStorage.getItem('winner');
     let winner = JSON.parse(fetchedWinner);

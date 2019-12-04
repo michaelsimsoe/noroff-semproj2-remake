@@ -6,11 +6,12 @@
     &__text {
       text-align: center;
       position: relative;
-    top: -100px;
-    color: red;
-    font-weight: bold;
-    font-size: 0.9rem;
-    max-width: 100px;
+      top: -100px;
+      background-color: $background-color;
+      color: $golden-font;
+      font-weight: bold;
+      font-size: 0.9rem;
+      max-width: 100px;
     }
 
     & svg {
@@ -20,18 +21,17 @@
   }
   width: 100vw;
   height: 100px;
-  #duck {
-    width: 100vw;
-    position: absolute;
-    filter: drop-shadow(3px 3px 3px black);
+
+  & #header > path{
+    fill: $primary-color;
   }
 
   &__hamburger {
     width: 60px;
     height: 45px;
     position: absolute;
-    right: 20px;
-    top: 20px;
+    right: 25px;
+    top: 25px;
     transform: rotate(0deg);
     transition: 0.5s ease-in-out;
     margin-right: 0.5rem;
@@ -43,7 +43,7 @@
       position: absolute;
       height: 9px;
       width: 100%;
-      background: blue;
+      background: $primary-color;
       border-radius: 9px;
       opacity: 1;
       left: 0;

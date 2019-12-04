@@ -1,3 +1,6 @@
+/*------------------------------------*\
+  #GAME DICE
+\*------------------------------------*/
 .dice {
   display: flex;
   flex-direction: column;
@@ -51,7 +54,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  background-color: #4e8eb4;
+  background-color: $primary-color;
+  color: $background-color;
 
   &--active {
     visibility: visible !important;

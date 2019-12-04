@@ -3,13 +3,15 @@
     opacity: 0;
     transform: translateY(300px);
   }
-  transition: all .8s ease-in-out;
+  transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   position: fixed;
   bottom: 8px;
   left: 8px;
   width: 25vw;
   min-height: 100px;
   padding: 2em;
-  background-color: red;
+  background-color: $background-color;
+  color: $golden-font;
+  border-top: 6px solid $golden-font;
   box-shadow: $box-shadow;
 }

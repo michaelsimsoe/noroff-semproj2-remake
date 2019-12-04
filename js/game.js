@@ -1,4 +1,5 @@
 import { gameTiles } from './game/game_tiles.js';
+import { navigation } from './util/navigation.js';
 
 const STATE = {
   return: {
@@ -37,6 +38,7 @@ const PLAYER_TWO = getPlayerObject('player-two');
 const WESTERORS_DRAWING = document.getElementById('Layer_2');
 
 document.addEventListener('DOMContentLoaded', async function(event) {
+  navigation();
   setUpPlayerToken(PLAYER_ONE, 'one');
   setUpPlayerToken(PLAYER_TWO, 'two');
   const TOKEN_PLAYER_ONE = document.getElementById('player-token-one');

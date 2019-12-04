@@ -17,17 +17,18 @@
 
   &__content {
     text-align: center;
-    background-color: #141414;
+    background-color: $primary-color;
     padding: 3em;
     color: #fff;
     box-shadow: $box-shadow;
     border-radius: 2px;
     display: flex;
-    flex-direction: columtn;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     & h2 {
       text-transform: uppercase;
+      border-bottom: $golden-font 2px solid;
     }
   }
 }
