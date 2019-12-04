@@ -1,0 +1,16 @@
+.main-navigation {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100vh;
+  width: 270px;
+  background-color: red;
+  z-index: 100;
+  box-shadow: $box-shadow;
+  transform: translateX(270px);
+  transition: transform .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  &--open {
+    transform: translateX(20px);
+  }
+}

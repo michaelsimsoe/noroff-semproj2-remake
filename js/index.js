@@ -1,5 +1,6 @@
 import { House } from './char_select/house.js';
 import { Character } from './char_select/character.js';
+import { navigation } from './util/navigation.js';
 
 document.addEventListener('DOMContentLoaded', async function(event) {
   let playerOneIsSet = false;
@@ -9,10 +10,8 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   const ALERT_MSG = document.getElementById('alert-msg');
   let PLAYER_ONE = '';
   let PLAYER_TWO = '';
-  hamburgerMenu.addEventListener('click', function(event) {
-    hamburgerMenu.classList.toggle('open');
-    // navigation.classList.toggle('navigation--open');
-  });
+
+  navigation();
 
   const HOUSES = [
     {

@@ -22,11 +22,9 @@ const STATE = {
 
     name.innerHTML = `${this.currentPlayer.name}`;
     house.innerHTML = `of ${this.currentPlayer.house}`;
-    position.innerHTML = `${
-      gameTiles[this.currentPlayer.moved].position
-        ? gameTiles[this.currentPlayer.moved].position
-        : 'unknown'
-    }`;
+    if (gameTiles[this.currentPlayer.moved].position) {
+      position.innerHTML = `${gameTiles[this.currentPlayer.moved].position}`;
+    }
   }
 };
 let moved = 1;
