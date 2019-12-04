@@ -1,5 +1,6 @@
 import { gameTiles } from './game/game_tiles.js';
 import { navigation } from './util/navigation.js';
+import { alert } from './util/alert.js';
 
 const STATE = {
   return: {
@@ -16,19 +17,23 @@ const STATE = {
     this.currentPlayer.card.classList.add('card--active');
     this.waitingPlayer.card.classList.remove('card--active');
   },
-  updatePlayerCard() {
-    const name = this.currentPlayer.card.querySelector('h3');
-    const house = this.currentPlayer.card.querySelector('h4');
-    const position = this.currentPlayer.card.querySelector('span');
+  updatePlayerCard(currentPlayer = true) {
+    let player = this.currentPlayer;
+    if (!currentPlayer) {
+      player = this.waitingPlayer;
+    }
+    const name = player.card.querySelector('h3');
+    const house = player.card.querySelector('h4');
+    const position = player.card.querySelector('span');
 
-    name.innerHTML = `${this.currentPlayer.name}`;
-    house.innerHTML = `of ${this.currentPlayer.house}`;
-    if (gameTiles[this.currentPlayer.moved].position) {
-      position.innerHTML = `${gameTiles[this.currentPlayer.moved].position}`;
+    name.innerHTML = `${player.name}`;
+    house.innerHTML = `of ${player.house}`;
+    if (gameTiles[player.moved].position) {
+      position.innerHTML = `${gameTiles[player.moved].position}`;
     }
   }
 };
-let moved = 1;
+const ALERT_BOX = alert();
 const DICE_BTN = document.getElementById('dice-btn');
 
 const STORY_BOARD = document.getElementById('story-board-list');
@@ -63,6 +68,8 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     trapped: 0,
     rollDiceAgain: false
   };
+  STATE.updatePlayerCard();
+  STATE.updatePlayerCard(false);
   DICE_BTN.addEventListener('click', function(e) {
     DICE_BTN.disabled = true;
     checkActiveDiceSideAndRemove();
@@ -88,6 +95,12 @@ function setUpPlayerToken(player, num) {
 
 function getPlayerObject(player) {
   let fetchedPlayer = localStorage.getItem(player);
+  if (fetchedPlayer === null) {
+    ALERT_BOX.displayAlertMsg(`
+      <p>You need to chose characters first</p>
+      <a href="/index.html?error=missingchar">Go to Playaer Select</a>
+    `);
+  }
   let playerObject = JSON.parse(fetchedPlayer);
   return playerObject;
 }
@@ -190,6 +203,7 @@ function checkForEndGame(moves) {
 }
 
 function rollDiceAndMove(token) {
+  STATE.updatePlayerCard();
   checkIfPlayerIsTrapped();
   addAnimationClass();
 
@@ -217,22 +231,20 @@ function rollDiceAndMove(token) {
 
     setTimeout(() => {
       if (STATE.currentPlayer.rollDiceAgain) {
-        addGameInteraction('Six, player goes again');
+        addGameInteraction(
+          `${STATE.currentPlayer.name} rolls a six and gets a burst of energy!`
+        );
       } else {
         if (!STATE.return.active) {
-          // STATE.return.amount = 0;
-          // STATE.return.active = false;
           STATE.changePlayer();
-
           return;
         } else {
-          // STATE.changePlayer();
         }
       }
-    }, 800 * moves);
+      STATE.updatePlayerCard();
+    }, 801 * moves);
     removeAnimationClass();
   }, 2400);
-  STATE.updatePlayerCard();
 }
 
 function moveTileForwards(moves) {
@@ -303,5 +315,5 @@ function displayWinnerModal(player) {
 }
 
 function redircetToFinale() {
-  window.location.href = '/finale.html';
+  window.location.href = 'finale.html';
 }

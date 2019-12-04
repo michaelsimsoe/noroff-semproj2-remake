@@ -1,37 +1,41 @@
+/*------------------------------------*\
+  #HEADER
+\*------------------------------------*/
+
 .main-header {
   & .logo {
+    & a {
+      text-decoration: none;
+    }
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 1px;
+    left: 10px;
     &__text {
       text-align: center;
+      transform: translateX(40%);
       position: relative;
-      top: -100px;
-      background-color: $background-color;
-      color: $golden-font;
+      top: -80px;
+      color: #fff;
       font-weight: bold;
-      font-size: 0.9rem;
-      max-width: 100px;
+      font-size: 0.5rem;
+      max-width: 40px;
     }
 
     & svg {
-      max-width: 140px;
-      position: relative; 
+      width: 70px;
+      position: relative;
     }
   }
-  width: 100vw;
-  height: 100px;
-
-  & #header > path{
+  & #header > path {
     fill: $primary-color;
   }
 
   &__hamburger {
     width: 60px;
     height: 45px;
-    position: absolute;
-    right: 25px;
-    top: 25px;
+    position: fixed;
+    right: 2px;
+    top: 5px;
     transform: rotate(0deg);
     transition: 0.5s ease-in-out;
     margin-right: 0.5rem;
@@ -69,9 +73,9 @@
       top: 42px;
       text-transform: uppercase;
       font-family: 'Exo', sans-serif;
-      letter-spacing: .25em;
-      transition: transform .25s ease;
-      font-size: .9em;
+      letter-spacing: 0.25em;
+      transition: transform 0.25s ease;
+      font-size: 0.9em;
     }
 
     &.open h4 {
@@ -96,6 +100,36 @@
       top: 18px;
       width: 0%;
       left: 50%;
+    }
+  }
+}
+
+@media (min-width: 60rem) {
+  .main-header {
+    & .logo {
+      top: 20px;
+      left: 20px;
+      &__text {
+        text-align: center;
+        transform: translateX(25%);
+        position: relative;
+        top: -100px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 0.9rem;
+        max-width: 100px;
+      }
+
+      & svg {
+        width: 140px;
+      }
+    }
+    width: 100vw;
+    height: 100px;
+
+    &__hamburger {
+      right: 25px;
+      top: 25px;
     }
   }
 }

@@ -1,17 +1,39 @@
+/*------------------------------------*\
+  #ALERT MESSAGE BOX
+\*------------------------------------*/
 .alert-message {
   &--hidden {
     opacity: 0;
     transform: translateY(300px);
   }
-  transition: all .8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-  position: fixed;
-  bottom: 8px;
-  left: 8px;
-  width: 25vw;
-  min-height: 100px;
-  padding: 2em;
   background-color: $background-color;
-  color: $golden-font;
+  bottom: 8px;
   border-top: 6px solid $golden-font;
   box-shadow: $box-shadow;
+  color: $golden-font;
+  left: 8px;
+  min-height: 100px;
+  padding: 2em;
+  position: fixed;
+  width: 94vw;
+  transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+@media (min-width: 60rem) {
+  .alert-message {
+    &--hidden {
+      opacity: 0;
+      transform: translateY(300px);
+    }
+    background-color: $background-color;
+    bottom: 8px;
+    border-top: 6px solid $golden-font;
+    box-shadow: $box-shadow;
+    color: $golden-font;
+    left: 8px;
+    min-height: 100px;
+    padding: 2em;
+    position: fixed;
+    width: 25vw;
+    transition: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
 }

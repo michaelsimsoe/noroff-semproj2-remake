@@ -1,25 +1,28 @@
 /*------------------------------------*\
   #GAME PAGE
 \*------------------------------------*/
+
 .game-page {
   overflow: hidden;
   max-height: 100vh;
 }
 .game {
   display: flex;
-  margin: 6em auto;
-  width: 70%;
+  margin-top: 3em;
+  width: 100%;
   justify-content: space-between;
+  flex-direction: column-reverse;
+  height: 80vh;
   &__interactions {
     flex-grow: 1;
   }
 
   &__board {
     flex-grow: 2;
-    width: 40%;
+    width: 100%;
     & svg {
       width: 100%;
-      max-height: 70vh;
+      max-height: 50vh;
 
       & {
         .player-token {
@@ -31,6 +34,7 @@
   }
 
   &__player-cards {
+    display: none;
     flex-grow: 1;
 
     & .card {
@@ -38,7 +42,7 @@
       margin-bottom: 4em;
       padding: 1em;
       transition: all .4s ease-in;
-      min-width: 300px;;
+      width: 300px;;
       &--active {
         background-color: $primary-color;
         color: $background-color;
@@ -46,6 +50,60 @@
 
       & h3 {
         border-bottom: 2px $golden-font solid;
+      }
+    }
+  }
+}
+
+@media (min-width: 60rem) {
+  .game-page {
+    overflow: hidden;
+    max-height: 100vh;
+  }
+  .game {
+    display: flex;
+    margin: 6em auto;
+    width: 70%;
+    justify-content: space-between;
+    flex-direction: row;
+    &__interactions {
+      flex-grow: 1;
+    }
+
+    &__board {
+      flex-grow: 2;
+      width: 40%;
+      & svg {
+        width: 100%;
+        max-height: 70vh;
+
+        & {
+          .player-token {
+            height: 70px;
+            transition: all 0.8s ease;
+          }
+        }
+      }
+    }
+
+    &__player-cards {
+      display: block;
+      flex-grow: 1;
+
+      & .card {
+        box-shadow: $box-shadow;
+        margin-bottom: 4em;
+        padding: 1em;
+        transition: all .4s ease-in;
+        width: 300px;;
+        &--active {
+          background-color: $primary-color;
+          color: $background-color;
+        }
+
+        & h3 {
+          border-bottom: 2px $golden-font solid;
+        }
       }
     }
   }

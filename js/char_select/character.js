@@ -14,7 +14,7 @@ export class Character {
   displayCharacterCardToDom() {
     return `
       <div class="character-card" data-character="${this.name}">
-        <img src="assets/misc/${this.gender}.svg" alt=""/>
+        <img src="assets/misc/${this.gender.toLowerCase()}.svg" alt=""/>
         <h3>${this.name}</h3>
         <button class="char-select-btn">Choose Character</button>
       </div>

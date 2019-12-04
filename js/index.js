@@ -1,16 +1,16 @@
 import { House } from './char_select/house.js';
 import { Character } from './char_select/character.js';
 import { navigation } from './util/navigation.js';
+import { alert } from './util/alert.js';
+const ALERT_BOX = alert();
 
 document.addEventListener('DOMContentLoaded', async function(event) {
+  checkQueryParams();
   let playerOneIsSet = false;
   let playerTwoIsSet = false;
-  const hamburgerMenu = document.getElementById('menu');
   const CHARACTERSTATUS_CONTAINER = document.getElementById('character-status');
   const ALERT_MSG = document.getElementById('alert-msg');
   const BEGIN_BUTTON = document.getElementById('begin-btn');
-  let PLAYER_ONE = '';
-  let PLAYER_TWO = '';
 
   navigation();
 
@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     });
 
     houseArray.push(h);
+    removeLoader();
     HOUSES_CONTAINER.innerHTML += h.displayHouseSigilToDom();
   });
 
@@ -54,7 +55,8 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   HOUSES_CONTAINER.addEventListener(
     'click',
     function(e) {
-      let houseName = e.path.find(el => el.dataset.name).dataset.name;
+      let path = e.path || (e.composedPath && e.composedPath());
+      let houseName = path.find(el => el.dataset.name).dataset.name;
       let currentHouse = houseArray.find(house => house.name === houseName);
       CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
       HOUSES_CONTAINER.scrollIntoView();
@@ -80,7 +82,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
     if (playerOne.match(player) || playerTwo.match(player)) {
       displayAlertMsg(
-        `${player} is allready chosen. Please try one of the others.`
+        `${player} is already chosen. Please try one of the others.`
       );
       hideAlertMSg();
       return true;
@@ -118,8 +120,9 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     two.classList.remove('character-status__player--hidden');
     playerTwoIsSet = true;
     localStorage.setItem('player-two', JSON.stringify({ name, house }));
-    BEGIN_BUTTON.scrollIntoView();
-
+    setTimeout(() => {
+      BEGIN_BUTTON.scrollIntoView();
+    }, 500);
     readyToPlay();
     return;
   }
@@ -155,4 +158,18 @@ async function getCharacter(name) {
 async function getHouse(name) {
   const nameURL = `${URL}houses?name=${encodeURI(name)}`;
   return await getResource(nameURL);
+}
+
+function checkQueryParams() {
+  var urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('error')) {
+    ALERT_BOX.displayAlertMsg('peis');
+  }
+}
+
+function removeLoader() {
+  let loader = document.getElementById('dots-loader');
+  if (loader) {
+    loader.remove();
+  }
 }
