@@ -113,11 +113,11 @@ function checkActiveDiceSideAndRemove() {
   }
 }
 
-function addGameInteraction(interaction) {
+function addGameInteraction(interaction, type = '') {
   STORY_BOARD.insertAdjacentHTML(
     'afterbegin',
     `
-    <li class="story-board__item">${interaction}</li>
+    <li class="story-board__item ${type}">${interaction}</li>
   `
   );
 }
