@@ -38,3 +38,5 @@ css/*
 *.css.map
 *.sass.map
 *.scss.map
+.sass-cache/d035f76a1879ee8cdf1ce7c755a44223e22f8593/game.scssc
+css/main.css

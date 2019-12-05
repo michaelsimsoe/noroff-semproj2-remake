@@ -22,7 +22,7 @@
       box-shadow: $box-shadow;
       background-color: $primary-color;
       border: none;
-      transition: transform 0.4s ease-in, opacity 0.3s ease;
+      transition: transform 0.8s ease-in, opacity 0.3s ease;
       text-decoration: none;
       display: flex;
 
@@ -46,8 +46,7 @@
 
       &--hidden {
         visibility: hidden;
-        transform: translateX(400px);
-        opacity: 0;
+        transform: translateX(-400px);
       }
 
       &:hover {

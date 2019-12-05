@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     localStorage.setItem('player-two', JSON.stringify({ name, house }));
     setTimeout(() => {
       BEGIN_BUTTON.scrollIntoView();
-    }, 500);
+    }, 400);
     readyToPlay();
     return;
   }
