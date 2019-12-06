@@ -317,3 +317,5 @@ function displayWinnerModal(player) {
 function redircetToFinale() {
   window.location.href = 'finale.html';
 }
+
+window.STATE = STATE;
