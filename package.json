@@ -1,0 +1,28 @@
+{
+  "name": "semproj2",
+  "version": "1.0.0",
+  "description": "A semester project for my 3. semester at Noroff ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/michaelsimsoe/noroff-semproj2.git"
+  },
+  "keywords": [
+    "gotr",
+    "game",
+    "school",
+    "project"
+  ],
+  "author": "Michael Kroyserth-Simsoe <mikke.korgen@gmail.com> (http://michaelsimsoe.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/michaelsimsoe/noroff-semproj2/issues"
+  },
+  "homepage": "https://github.com/michaelsimsoe/noroff-semproj2#readme",
+  "dependencies": {
+    "cypress": "3.7.0"
+  }
+}
