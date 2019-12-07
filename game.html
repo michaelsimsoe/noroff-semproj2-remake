@@ -5,9 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>The Board Game of Thrones - Game</title>
-    <link href="https://fonts.googleapis.com/css?family=Cinzel:400,700|Montserrat&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css?family=Cinzel:400,700|Montserrat&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="prefetch" href="finale.html">
+    <link rel="prefetch" href="finale.html" />
   </head>
   <body class="game-page">
     <header class="main-header">
@@ -35,9 +38,13 @@
               </g>
             </g>
           </svg>
-          <h1 class="logo__text">The Board Game<br> of Thrones</h1>
+          <h1 class="logo__text">
+            The Board Game<br />
+            of Thrones
+          </h1>
         </a>
-      </div> <!-- LOGO -->
+      </div>
+      <!-- LOGO -->
       <svg
         class="main-header__background"
         xmlns="http://www.w3.org/2000/svg"
@@ -54,15 +61,18 @@
             />
           </g>
         </g>
-      </svg> <!-- HEADER BACKGROUND -->
+      </svg>
+      <!-- HEADER BACKGROUND -->
       <div class="main-header__hamburger" id="menu">
         <span></span>
         <span></span>
         <span></span>
         <span></span>
         <h4>Menu</h4>
-      </div> <!-- MENU ICON -->
-    </header> <!-- HEADER -->
+      </div>
+      <!-- MENU ICON -->
+    </header>
+    <!-- HEADER -->
     <aside class="main-navigation" id="main-navigation">
       <nav class="navigation">
         <div class="navigation__item">
@@ -75,45 +85,51 @@
           <a href="https://michaelsimsoe.no">Michaelsimsoe.no</a>
         </div>
       </nav>
-    </aside> <!-- SIDEBAR -->
+    </aside>
+    <!-- SIDEBAR -->
     <main class="game">
       <section class="game__interactions">
         <div class="story-board">
           <h2>The story</h2>
-          <ul class="story-board__list" id="story-board-list">
-          </ul> 
+          <ul class="story-board__list" id="story-board-list"></ul>
         </div>
         <!-- STORY BOARD -->
         <div class="dice">
           <div id="dice-figure" class="dice__figure">
             <div class="dice__side dice__side-start">
               <div class="dice__dot"></div>
-            </div> <!-- DICE FRONT -->
+            </div>
+            <!-- DICE FRONT -->
             <div class="dice__side dice__side-one">
               <div class="dice__dot"></div>
-            </div> <!-- DICE ONE -->
+            </div>
+            <!-- DICE ONE -->
             <div class="dice__side dice__side-two">
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
-            </div> <!-- DICE TWO -->
+            </div>
+            <!-- DICE TWO -->
             <div class="dice__side dice__side-three">
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
-            </div> <!-- DICE THREE -->
+            </div>
+            <!-- DICE THREE -->
             <div class="dice__side dice__side-four">
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
-            </div> <!-- DICE FOUR -->
+            </div>
+            <!-- DICE FOUR -->
             <div class="dice__side dice__side-five">
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
-            </div> <!-- DICE FIVE -->
+            </div>
+            <!-- DICE FIVE -->
             <div class="dice__side dice__side-six">
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
@@ -121,7 +137,8 @@
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
               <div class="dice__dot"></div>
-            </div>  <!-- DICE SIX -->
+            </div>
+            <!-- DICE SIX -->
           </div>
           <button id="dice-btn" class="dice__button">ROLL</button>
         </div>
@@ -335,16 +352,21 @@
       </section>
       <!-- GAME PLAYER-CARDS -->
     </main>
-    <div id="finale-modal" class="finale-modal">
+    <div id="finale-modal" data-cy="finale-modal" class="finale-modal">
       <div class="finale-modal__content">
         <h2>Congratulations, <span id="game-winner"></span>!</h2>
         <p>You are the first to reach Kings Landing!</p>
       </div>
-    </div> <!-- VICTORY MODAL -->
-    <section class="alert-message alert-message--hidden" id="alert-msg">
-      <div class="alert-message__message">
-      </div>
-    </section> <!-- ALERT MESSAGE -->
+    </div>
+    <!-- VICTORY MODAL -->
+    <section
+      class="alert-message alert-message--hidden"
+      data-cy="alert-box"
+      id="alert-msg"
+    >
+      <div class="alert-message__message"></div>
+    </section>
+    <!-- ALERT MESSAGE -->
     <script type="module" src="js/game.js"></script>
   </body>
 </html>

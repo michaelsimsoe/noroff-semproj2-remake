@@ -14,19 +14,19 @@ export const gameTiles = [
   {
     x: 140,
     y: 260,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'return', amount: '2' }),
+    trap: '',
     position: 'Just south of Winterfell'
   },
   {
     x: 200,
     y: 260,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'return', amount: '2' })
+    trap: ''
   },
   { x: 200, y: 210, trap: '', position: 'Winterfell' },
   {
     x: 250,
     y: 170,
-    trap: new Trap('Jack', { text: 'Buhu', type: 'return', amount: '2' }),
+    trap: '',
     position: 'North of Winterfell'
   },
   {

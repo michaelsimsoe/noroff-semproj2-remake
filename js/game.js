@@ -70,6 +70,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   };
   STATE.updatePlayerCard();
   STATE.updatePlayerCard(false);
+  window.__state__ = STATE;
   DICE_BTN.addEventListener('click', function(e) {
     DICE_BTN.disabled = true;
     checkActiveDiceSideAndRemove();
@@ -85,6 +86,7 @@ function setUpPlayerToken(player, num) {
   let token = ` <image
             class="player-token"
             id="player-token-${num}"
+            data-cy="player-token"
             x="170"
             y="370"
             xlink:href="assets/sigils/${houseName}_small.svg"
@@ -98,7 +100,7 @@ function getPlayerObject(player) {
   if (fetchedPlayer === null) {
     ALERT_BOX.displayAlertMsg(`
       <p>You need to chose characters first</p>
-      <a href="/index.html?error=missingchar">Go to Playaer Select</a>
+      <a href="/index.html?error=missingchar">Go to Player Select</a>
     `);
   }
   let playerObject = JSON.parse(fetchedPlayer);
@@ -124,7 +126,6 @@ function addGameInteraction(interaction, type = '') {
 
 function moveTokenTo(token, pos, dir = 'FORWARDS') {
   if (!pos) return; // Return if there are no more moves left in gameTiles
-  console.log(dir);
   token.setAttribute('x', pos.x);
   token.setAttribute('y', pos.y);
   return;
@@ -317,5 +318,3 @@ function displayWinnerModal(player) {
 function redircetToFinale() {
   window.location.href = 'finale.html';
 }
-
-window.STATE = STATE;
