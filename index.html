@@ -23,8 +23,8 @@
         width: 80px;
         height: 80px;
         position: absolute;
-	      top: 50%;
-	      left: 40%;
+        top: 50%;
+        left: 40%;
       }
       @media (min-width: 60rem) {
         .dots {
@@ -81,7 +81,7 @@
         }
       }
     </style>
-    <link rel="prefetch" href="game.html">
+    <link rel="prefetch" href="game.html" />
   </head>
   <body>
     <header class="main-header">
@@ -109,9 +109,13 @@
               </g>
             </g>
           </svg>
-          <h1 class="logo__text">The Board Game<br> of Thrones</h1>
+          <h1 class="logo__text">
+            The Board Game<br />
+            of Thrones
+          </h1>
         </a>
-      </div> <!-- LOGO -->
+      </div>
+      <!-- LOGO -->
       <svg
         class="main-header__background"
         xmlns="http://www.w3.org/2000/svg"
@@ -135,8 +139,10 @@
         <span></span>
         <span></span>
         <h4>Menu</h4>
-      </div> <!-- MENU ICON -->
-    </header> <!-- HEADER -->
+      </div>
+      <!-- MENU ICON -->
+    </header>
+    <!-- HEADER -->
     <aside class="main-navigation" id="main-navigation">
       <nav class="navigation">
         <div class="navigation__item">
@@ -149,19 +155,23 @@
           <a href="https://michaelsimsoe.no">Michaelsimsoe.no</a>
         </div>
       </nav>
-    </aside> <!-- SIDEBAR -->
+    </aside>
+    <!-- SIDEBAR -->
     <main class="character-select">
       <div class="dots" id="dots-loader">
         <div></div>
         <div></div>
         <div></div>
         <div></div>
-      </div> <!-- LOADER -->
-      <section class="houses"></section> <!-- HOUSE SIGILS (filled with ajax) -->
+      </div>
+      <!-- LOADER -->
+      <section class="houses"></section>
+      <!-- HOUSE SIGILS (filled with ajax) -->
       <section
         id="character-select__characters"
         class="character-select__characters"
-      ></section> <!-- CHARACTER SELECTION -->
+      ></section>
+      <!-- CHARACTER SELECTION -->
       <section class="character-status" id="character-status">
         <div
           class="character-status__player character-status__player--hidden"
@@ -171,16 +181,27 @@
           class="character-status__player character-status__player--hidden"
           id="select-player-two"
         ></div>
-        <a class="begin-btn begin-btn--hidden" data-cy="begin-btn" id="begin-btn" href="game.html"
+        <a
+          class="begin-btn begin-btn--hidden"
+          data-cy="begin-btn"
+          id="begin-btn"
+          href="game.html"
           ><span class="begin-btn__text"
             >Let The Board Game of Thrones Begin</span
           ><span class="begin-btn__caret">></span></a
         >
-      </section> <!-- SELECTED CHARACTERS-->
-    </main> <!-- MAIN CONTENT -->
-    <section class="alert-message alert-message--hidden" id="alert-msg" data-cy="alert-box">
+      </section>
+      <!-- SELECTED CHARACTERS-->
+    </main>
+    <!-- MAIN CONTENT -->
+    <section
+      class="alert-message alert-message--hidden"
+      id="alert-msg"
+      data-cy="alert-box"
+    >
       <div class="alert-message__message"></div>
-    </section> <!-- ALERT BOX (hidden) -->
-    <script type="module" src="js/index.js"></script>
+    </section>
+    <!-- ALERT BOX (hidden) -->
+    <script type="module" src="js/character_select.js"></script>
   </body>
 </html>
