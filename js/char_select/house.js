@@ -8,8 +8,10 @@ export class House {
   displayHouseSigilToDom() {
     return `<div class="houses__house" data-name="${this.name}">
       <h3>${this.name}</h3>
-      <figure>
-        <img src="assets/sigils/${this.getSigilPath()}.svg" alt=""/>
+      <figure tabindex="0">
+        <img src="assets/sigils/${this.getSigilPath()}.svg" data-name="${
+      this.name
+    }" alt="The sigil of ${this.name}"/>
       </figure>
     </div>`;
   }

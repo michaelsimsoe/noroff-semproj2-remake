@@ -10,6 +10,7 @@
   display: flex;
   margin-top: 3em;
   width: 100%;
+  padding: 0.2em;
   justify-content: space-between;
   flex-direction: column-reverse;
   height: 80vh;
@@ -41,8 +42,8 @@
       box-shadow: $box-shadow;
       margin-bottom: 4em;
       padding: 1em;
-      transition: all .4s ease-in;
-      width: 300px;;
+      transition: all 0.4s ease-in;
+      width: 300px;
       &--active {
         background-color: $primary-color;
         color: $background-color;
@@ -94,8 +95,8 @@
         box-shadow: $box-shadow;
         margin-bottom: 4em;
         padding: 1em;
-        transition: all .4s ease-in;
-        width: 300px;;
+        transition: all 0.4s ease-in;
+        width: 300px;
         &--active {
           background-color: $primary-color;
           color: $background-color;

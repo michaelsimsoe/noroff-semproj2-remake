@@ -3,6 +3,7 @@
 \*------------------------------------*/
 
 .game__interactions {
+  border-top: solid 0.5px $golden-font;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -29,11 +30,11 @@
       z-index: 5;
     }
     &__list {
-      padding: 2em;
+      padding: 0.2em;
     }
     &__item {
-      animation: pop .5s forwards;
-      padding: .3em;
+      animation: pop 0.5s forwards;
+      padding: 0.3em;
       border-radius: 2px;
     }
 
@@ -76,8 +77,8 @@
         padding: 2em;
       }
       &__item {
-        animation: pop .5s forwards;
-        padding: .3em;
+        animation: pop 0.5s forwards;
+        padding: 0.3em;
         border-radius: 2px;
       }
 

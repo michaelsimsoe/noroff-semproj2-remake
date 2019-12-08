@@ -6,6 +6,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
     <link rel="icon" href="/favicon.ico" type="image/x-icon" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="”theme-color”" content="”#272623”" />
     <title>The Board Game of Thrones - Character Select</title>
     <link
       href="https://fonts.googleapis.com/css?family=Exo:700|Frank+Ruhl+Libre:400,700|Merriweather:400,700&amp;display=swap"
@@ -23,7 +24,7 @@
         width: 80px;
         height: 80px;
         position: absolute;
-        top: 50%;
+        top: 55%;
         left: 40%;
       }
       @media (min-width: 60rem) {
@@ -158,21 +159,33 @@
     </aside>
     <!-- SIDEBAR -->
     <main class="character-select">
-      <div class="dots" id="dots-loader">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      <!-- LOADER -->
-      <section class="houses"></section>
+      <section class="intro" id="intro-section">
+        <h2>Welcome to The Board Game</h2>
+        <h3>Of Thrones</h3>
+        <p>
+          Choose among five of the major houses and compete for the Iron Throne.
+          This game takes two players. Take turns and roll the dice.
+        </p>
+        <div class="dots" id="dots-loader">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+        <!-- LOADER -->
+      </section>
+      <!-- INTRO SECTION -->
+      <section
+        class="houses hidden-content"
+        id="character-select-houses"
+      ></section>
       <!-- HOUSE SIGILS (filled with ajax) -->
       <section
         id="character-select__characters"
         class="character-select__characters"
       ></section>
       <!-- CHARACTER SELECTION -->
-      <section class="character-status" id="character-status">
+      <section class="character-status hidden-content" id="character-status">
         <div
           class="character-status__player character-status__player--hidden"
           id="select-player-one"

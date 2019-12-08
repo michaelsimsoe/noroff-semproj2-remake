@@ -2,8 +2,39 @@
   #CHARACTER SELECT PAGE
 \*------------------------------------*/
 .character-select {
+  & .intro {
+    margin: 2em auto;
+    width: 100%;
+    padding: 0.5em;
+    transition: all 0.3s ease-in-out;
+
+    & .show-character-button {
+      color: $golden-font;
+      padding: 2em;
+      box-shadow: $box-shadow;
+      background-color: $tertiary-color;
+      border: none;
+      transition: transform 0.8s ease-in, opacity 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      -webkit-text-stroke-width: 0.5px;
+      -webkit-text-stroke-color: #fff;
+
+      &:active {
+        background-color: darken($primary-color, 2%);
+      }
+    }
+  }
   margin-top: 50px;
   width: 100vw;
+
+  & .hidden-content {
+    position: absolute;
+    visibility: hidden;
+    opacity: 0;
+    transform: translateX(-500px);
+    transition: all 0.3s ease-in-out;
+  }
 
   & .houses,
   & .character-select__characters {
@@ -33,10 +64,11 @@
   }
 
   & .houses {
+    transition: all 0.3s ease-in-out;
     &__house {
       width: 20%;
       & h3 {
-        font-size: .7em;
+        font-size: 0.7em;
         height: 100px;
         margin: 0 5px;
         text-align: bottom;
@@ -80,6 +112,32 @@
   .character-select {
     margin-top: 120px;
     width: 100vw;
+
+    & .intro {
+      margin: 2em auto;
+      width: 60%;
+      transition: all 0.3s ease-in-out;
+
+      & .show-character-button {
+        color: $golden-font;
+        padding: 2em;
+        box-shadow: $box-shadow;
+        background-color: $tertiary-color;
+        border: none;
+        transition: transform 0.8s ease-in, opacity 0.3s ease;
+        text-decoration: none;
+        display: flex;
+        -webkit-text-stroke-width: 0.5px;
+        -webkit-text-stroke-color: #fff;
+
+        &:hover {
+          background-color: $primary-color;
+        }
+        &:active {
+          background-color: darken($primary-color, 10%);
+        }
+      }
+    }
 
     & .houses,
     & .character-select__characters {
@@ -144,5 +202,6 @@
   }
 
   .character-status {
+    transition: all 0.3s ease-in-out;
   }
 }

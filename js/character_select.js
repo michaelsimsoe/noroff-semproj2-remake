@@ -4,7 +4,7 @@ import { HOUSES } from './char_select/houses.js';
 import { getCharacter, getHouse } from './char_select/fetchResources.js';
 import { navigation } from './util/navigation.js';
 import { alert } from './util/alert.js';
-import { checkQueryParams, removeLoader } from './util/helper.js';
+import { checkQueryParams, displayShowCharacterButton } from './util/helper.js';
 const ALERT_BOX = alert();
 
 document.addEventListener('DOMContentLoaded', async function(event) {
@@ -21,6 +21,9 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
   let houseArray = [];
   const HOUSES_CONTAINER = document.querySelector('.houses');
+
+  // Counter to keep track of fetched GoTR houses
+  let counter = 0;
   HOUSES.forEach(async house => {
     let h = new House(await getHouse(house.house));
     house.characters.forEach(async char => {
@@ -28,7 +31,13 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     });
 
     houseArray.push(h);
-    removeLoader();
+    counter++;
+
+    // When all houses has been fetched, change the view
+    if (counter === HOUSES.length) {
+      displayShowCharacterButton();
+      // readyToShowCharacters();
+    }
     HOUSES_CONTAINER.innerHTML += h.displayHouseSigilToDom();
   });
 
@@ -45,6 +54,25 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       let currentHouse = houseArray.find(house => house.name === houseName);
       CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
       HOUSES_CONTAINER.scrollIntoView();
+    },
+    false
+  );
+
+  HOUSES_CONTAINER.addEventListener(
+    'keyup',
+    function(e) {
+      var key = e.which || e.keyCode;
+      // To catch click events in both chrome and firefox
+      let path = e.path || (e.composedPath && e.composedPath());
+      let houseName = path.find(el => el.dataset.name).dataset.name;
+      let currentHouse = houseArray.find(house => house.name === houseName);
+      CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
+      if (key == 13) {
+        console.log(CHARACTER_CONTAINER.children[0].children[0].children[2]);
+        CHARACTER_CONTAINER.children[0].children[0].children[2].focus();
+
+        HOUSES_CONTAINER.scrollIntoView();
+      }
     },
     false
   );
@@ -102,4 +130,15 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   function readyToPlay() {
     BEGIN_BUTTON.classList.remove('begin-btn--hidden');
   }
+
+  // function readyToShowCharacters() {
+  //   removeIntro();
+  //   showMainContent();
+  //   displayShowCharacterButton();
+  // }
+
+  // function displayShowCharacterButton() {
+  //   removeLoader();
+
+  // }
 });
