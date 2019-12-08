@@ -1,59 +1,59 @@
 /*------------------------------------*\
   #CHARACTER STATUS
 \*------------------------------------*/
-  .character-status {
-
-    &__player {
-      &--hidden {
-        opacity: 0;
-      }
-
-      & p {
-        margin-bottom: .5em;
-      }
-      margin: 2em;
-      padding: 1em;
-      box-shadow: $box-shadow;
-      transition: all 0.3s ease-in;
+.character-status {
+  &__player {
+    &--hidden {
+      opacity: 0;
     }
-    .begin-btn {
-      color: $golden-font;
-      margin: 2em;
-      box-shadow: $box-shadow;
-      background-color: $primary-color;
-      border: none;
-      transition: transform 0.8s ease-in, opacity 0.3s ease;
-      text-decoration: none;
+
+    & p {
+      margin-bottom: 0.5em;
+    }
+
+    margin: 2em;
+    padding: 1em;
+    box-shadow: $box-shadow;
+    transition: all 0.3s ease-in;
+  }
+  .begin-btn {
+    color: $golden-font;
+    margin: 2em;
+    box-shadow: $box-shadow;
+    background-color: $primary-color;
+    border: none;
+    transition: transform 0.8s ease-in, opacity 0.3s ease;
+    text-decoration: none;
+    display: flex;
+
+    &__text {
+      display: inline-block;
+      padding: 2em;
+      width: 90%;
+      -webkit-text-stroke-width: 0.5px;
+      -webkit-text-stroke-color: #fff;
+    }
+
+    &__caret {
+      width: 10%;
+      background-color: $golden-font;
+      color: $primary-color;
       display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
 
-      &__text {
-        display: inline-block;
-        padding: 2em;
-        width: 90%;
-        -webkit-text-stroke-width: 0.5px;
-        -webkit-text-stroke-color: #fff;
-      }
+    &--hidden {
+      visibility: hidden;
+      transform: translateX(-400px);
+    }
 
-      &__caret {
-        width: 10%;
-        background-color: $golden-font;
-        color: $primary-color;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-      }
-
-      &--hidden {
-        visibility: hidden;
-        transform: translateX(-400px);
-      }
-
-      &:hover {
-        background-color: darkred;
-      }
+    &:hover {
+      background-color: darkred;
     }
   }
+}
 @media (min-width: 60rem) {
   .character-status {
     display: flex;

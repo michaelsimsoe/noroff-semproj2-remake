@@ -3,19 +3,17 @@ import { navigation } from './util/navigation.js';
 import { alert } from './util/alert.js';
 
 const STATE = {
-  return: {
-    active: false,
-    amount: 0
-  },
   currentPlayer: '',
   waitingPlayer: '',
   changePlayer() {
+    this.updatePlayerCard();
     [this.currentPlayer, this.waitingPlayer] = [
       this.waitingPlayer,
       this.currentPlayer
     ];
     this.currentPlayer.card.classList.add('card--active');
     this.waitingPlayer.card.classList.remove('card--active');
+    enableDiceBtn();
   },
   updatePlayerCard(currentPlayer = true) {
     let player = this.currentPlayer;
@@ -24,12 +22,19 @@ const STATE = {
     }
     const name = player.card.querySelector('h3');
     const house = player.card.querySelector('h4');
+    const status = player.card.querySelector('h5');
     const position = player.card.querySelector('span');
 
     name.innerHTML = `${player.name}`;
     house.innerHTML = `of ${player.house}`;
     if (gameTiles[player.moved].position) {
       position.innerHTML = `${gameTiles[player.moved].position}`;
+    }
+    if (status && player.trapped > 0) {
+      status.innerHTML = `${player.name} is waitng for ${player.trapped} turns`;
+    }
+    if (status && player.trapped < 1) {
+      status.innerHTML = '';
     }
   }
 };
@@ -57,6 +62,10 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     card: PLAYER_ONE_CARD,
     moved: 0,
     trapped: 0,
+    return: {
+      active: false,
+      amount: 0
+    },
     rollDiceAgain: false
   };
   STATE.waitingPlayer = {
@@ -66,13 +75,17 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     card: PLAYER_TWO_CARD,
     moved: 0,
     trapped: 0,
+    return: {
+      active: false,
+      amount: 0
+    },
     rollDiceAgain: false
   };
   STATE.updatePlayerCard();
   STATE.updatePlayerCard(false);
   window.__state__ = STATE;
   DICE_BTN.addEventListener('click', function(e) {
-    DICE_BTN.disabled = true;
+    disableDiceBtn();
     checkActiveDiceSideAndRemove();
     rollDiceAndMove(STATE.currentPlayer.token);
   });
@@ -119,7 +132,7 @@ function addGameInteraction(interaction, type = '') {
   STORY_BOARD.insertAdjacentHTML(
     'afterbegin',
     `
-    <li class="story-board__item ${type}">${interaction}</li>
+    <li class="story-board__item interaction${'-' + type}">${interaction}</li>
   `
   );
 }
@@ -136,7 +149,7 @@ function getRandomDiceResult() {
   return randomNumberBetweenOneAndSix;
 }
 
-function addAnimationClass() {
+function addDiceAnimationClass() {
   const DICE_FIGURE = document.getElementById('dice-figure');
   DICE_FIGURE.classList.add('dice__figure--active');
 }
@@ -157,59 +170,80 @@ function checkForSix(moves) {
   return false;
 }
 
-function checkForTraps(pos) {
-  if (pos && pos.trap != '') {
-    pos.trap.announceTrap();
-    let trap = pos.trap.releaseTrap();
-    switch (trap.type) {
-      case 'freeze':
-        STATE.currentPlayer.trapped = trap.amount;
-        addGameInteraction(
-          `${STATE.currentPlayer.name} needs to stay for ${trap.amount} turns.`
-        );
-        break;
-      case 'return':
-        STATE.return.active = true;
-        STATE.return.amount = trap.amount;
-        moveTileBackwards();
-        addGameInteraction(
-          `${STATE.currentPlayer.name}  needs to go back ${trap.amount} tiles.`
-        );
-        break;
-      default:
-        break;
+function checkForTraps(pos, moves) {
+  setTimeout(() => {
+    if (pos && pos.trap != '') {
+      pos.trap.announceTrap();
+      let trap = pos.trap.releaseTrap();
+      switch (trap.type) {
+        case 'freeze':
+          STATE.currentPlayer.trapped = trap.amount;
+          addGameInteraction(
+            `${STATE.currentPlayer.name} is held up by ${trap.character} and has to wait for ${trap.amount} turn(s): ${trap.text}`
+          );
+          break;
+        case 'return':
+          STATE.currentPlayer.return.active = true;
+          STATE.currentPlayer.return.amount = trap.amount;
+          moveTileBackwards();
+          addGameInteraction(
+            `${STATE.currentPlayer.name} encounters ${trap.character} and has to move back ${trap.amount} tiles: ${trap.text}`
+          );
+          break;
+        default:
+          break;
+      }
     }
-  }
+  }, 800 * moves);
 }
 
 function enableDiceBtn() {
+  console.log('Enabling dice');
   DICE_BTN.disabled = false;
 }
 
+function disableDiceBtn() {
+  DICE_BTN.disabled = true;
+}
+
 function checkForEndGame(moves) {
-  if (STATE.currentPlayer.moved >= 30) {
-    addGameInteraction(`${STATE.currentPlayer.name} has won the throne!`);
-    setWinner({
-      name: STATE.currentPlayer.name,
-      house: STATE.currentPlayer.house
-    });
-    setTimeout(() => {
-      redircetToFinale();
-    }, 4000);
-  } else {
-    setTimeout(() => {
-      enableDiceBtn();
-    }, 800 * moves);
-  }
+  setTimeout(() => {
+    if (STATE.currentPlayer.moved >= 30) {
+      addGameInteraction(`${STATE.currentPlayer.name} has won the throne!`);
+      setWinner({
+        name: STATE.currentPlayer.name,
+        house: STATE.currentPlayer.house
+      });
+      setTimeout(() => {
+        redircetToFinale();
+      }, 4000);
+      return true;
+    } else {
+      return false;
+    }
+  }, 800 * moves);
 }
 
 function rollDiceAndMove(token) {
-  STATE.updatePlayerCard();
-  checkIfPlayerIsTrapped();
-  addAnimationClass();
+  // check if player is on hold
+  //  if player is on hold, change user
+  if (STATE.currentPlayer.trapped > 0) {
+    STATE.currentPlayer.trapped--;
+    addGameInteraction(`${STATE.currentPlayer.name} is still waiting`);
+    STATE.changePlayer();
+    STATE.updatePlayerCard();
+    return;
+  }
 
+  // Start animation of dice
+  addDiceAnimationClass();
+
+  // Roll the dice
   setTimeout(() => {
     let moves = getRandomDiceResult();
+    addGameInteraction(
+      `${STATE.currentPlayer.name} rolls a ${diceNumberToString(moves)}`
+    );
 
     // If player rolls a six, store a status in rollDiceAgain
     STATE.currentPlayer.rollDiceAgain = checkForSix(moves);
@@ -217,32 +251,40 @@ function rollDiceAndMove(token) {
     // Check if player is to close to the last tile to complete all moves
     moves = checkIfPlannedMoveIsPastEnd(moves);
 
+    // Reset dice to standard position
     resetDice(moves);
 
     // Move the player
     moveTileForwards(moves);
 
-    // Checks if current player is at tile 30, if not it enables the dice button
-    checkForEndGame(moves);
-
     // After all move animations have ended, check if final tile contains trap
-    setTimeout(() => {
-      checkForTraps(gameTiles[STATE.currentPlayer.moved]);
-    }, 800 * moves);
+    checkForTraps(gameTiles[STATE.currentPlayer.moved], moves);
+
+    // Checks if current player is at tile 30, if not it enables the dice button
+    if (checkForEndGame(moves)) {
+      return;
+    }
 
     setTimeout(() => {
-      if (STATE.currentPlayer.rollDiceAgain) {
+      let playerRolledSixAndIsNotTrapped =
+        STATE.currentPlayer.rollDiceAgain &&
+        !STATE.currentPlayer.return.active &&
+        STATE.currentPlayer.trapped < 1;
+      if (playerRolledSixAndIsNotTrapped) {
         addGameInteraction(
-          `${STATE.currentPlayer.name} rolls a six and gets a burst of energy!`
+          `The six gives ${STATE.currentPlayer.name} a burst of energy! Roll again!`
         );
+        enableDiceBtn();
       } else {
-        if (!STATE.return.active) {
+        let playerIsNotSetToMoveBack = !STATE.currentPlayer.return.active;
+        if (playerIsNotSetToMoveBack) {
+          STATE.updatePlayerCard();
           STATE.changePlayer();
           return;
         } else {
+          STATE.changePlayer();
         }
       }
-      STATE.updatePlayerCard();
     }, 801 * moves);
     removeAnimationClass();
   }, 2400);
@@ -260,8 +302,7 @@ function moveTileForwards(moves) {
 }
 
 function moveTileBackwards() {
-  for (let i = 0; i <= STATE.return.amount; i++) {
-    console.log(i);
+  for (let i = 0; i <= STATE.currentPlayer.return.amount; i++) {
     (function(i) {
       setTimeout(() => {
         STATE.currentPlayer.moved--;
@@ -272,11 +313,9 @@ function moveTileBackwards() {
         );
         if (i === 2) {
           STATE.currentPlayer.moved++;
-          console.log('CHANGING');
-          STATE.return.amount = 0;
-          STATE.return.active = false;
+          STATE.currentPlayer.return.amount = 0;
+          STATE.currentPlayer.return.active = false;
           STATE.changePlayer();
-          console.log(STATE);
         }
       }, 801 * i);
     })(i);
@@ -286,10 +325,10 @@ function moveTileBackwards() {
 function checkIfPlayerIsTrapped() {
   if (STATE.currentPlayer.trapped > 0) {
     STATE.currentPlayer.trapped--;
-    // STATE.changePlayer();
-    enableDiceBtn();
+    STATE.changePlayer();
     return;
   }
+  // enableDiceBtn();
 }
 
 function resetDice(moves) {

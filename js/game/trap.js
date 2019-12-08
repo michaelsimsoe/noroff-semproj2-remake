@@ -11,8 +11,10 @@ export class Trap {
 
   releaseTrap() {
     return {
+      character: this.character,
       type: this.consequence.type,
-      amount: this.consequence.amount
+      amount: this.consequence.amount,
+      text: this.consequence.text
     };
   }
 }

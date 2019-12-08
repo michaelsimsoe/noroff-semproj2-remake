@@ -19,6 +19,36 @@ document.addEventListener('DOMContentLoaded', async function(event) {
 
   navigation();
 
+  CHARACTERSTATUS_CONTAINER.addEventListener('click', function(e) {
+    if (e.target.classList.contains('character-status__deselect')) {
+      let player = e.target.parentElement.id;
+      if (player === 'select-player-one') {
+        playerOneIsSet = false;
+      }
+      if (player === 'select-player-two') {
+        playerTwoIsSet = false;
+      }
+      e.target.parentElement.classList.add('character-status__player--hidden');
+      e.target.parentElement.innerHTML = '';
+    }
+  });
+
+  CHARACTERSTATUS_CONTAINER.addEventListener('keyup', function(e) {
+    var key = e.which || e.keyCode;
+    if (key !== 13) return;
+    if (e.target.classList.contains('character-status__deselect')) {
+      let player = e.target.parentElement.id;
+      if (player === 'select-player-one') {
+        playerOneIsSet = false;
+      }
+      if (player === 'select-player-two') {
+        playerTwoIsSet = false;
+      }
+      e.target.parentElement.classList.add('character-status__player--hidden');
+      e.target.parentElement.innerHTML = '';
+    }
+  });
+
   let houseArray = [];
   const HOUSES_CONTAINER = document.querySelector('.houses');
 
@@ -68,9 +98,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       let currentHouse = houseArray.find(house => house.name === houseName);
       CHARACTER_CONTAINER.innerHTML = currentHouse.displayCharacters();
       if (key == 13) {
-        console.log(CHARACTER_CONTAINER.children[0].children[0].children[2]);
         CHARACTER_CONTAINER.children[0].children[0].children[2].focus();
-
         HOUSES_CONTAINER.scrollIntoView();
       }
     },
@@ -81,6 +109,17 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     if (e.target.classList.contains('char-select-btn')) {
       let player = e.target.parentElement.dataset.character;
       let house = e.target.parentElement.parentElement.dataset.house;
+      setPlayer(player, house);
+      return;
+    }
+    if (e.target.parentElement.dataset.character) {
+      let player = e.target.parentElement.dataset.character;
+      let house = e.target.parentElement.parentElement.dataset.house;
+      setPlayer(player, house);
+    }
+    if (e.target.dataset.character) {
+      let player = e.target.dataset.character;
+      let house = e.target.parentElement.dataset.house;
       setPlayer(player, house);
     }
   });
@@ -109,14 +148,14 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     if (!playerOneIsSet) {
       let one = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-one');
       one.classList.remove('character-status__player--hidden');
-      one.innerHTML = `<h4>Player One</h4><p>${name}</p>`;
+      one.innerHTML = `<div class="character-status__deselect" tabindex="0">x</div><h4>Player One</h4><p>${name}</p>`;
       localStorage.setItem('player-one', JSON.stringify({ name, house }));
       playerOneIsSet = true;
       return;
     }
     if (isPlayerTaken(name)) return;
     let two = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-two');
-    two.innerHTML = `<h4>Player Two</h4><p>${name}</p>`;
+    two.innerHTML = `<div class="character-status__deselect" tabindex="0">x</div><h4>Player Two</h4><p>${name}</p>`;
     two.classList.remove('character-status__player--hidden');
     playerTwoIsSet = true;
     localStorage.setItem('player-two', JSON.stringify({ name, house }));

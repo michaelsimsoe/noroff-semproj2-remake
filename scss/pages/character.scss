@@ -107,6 +107,27 @@
     background-color: $primary-color;
     color: $background-color;
   }
+
+  .character-status {
+    transition: all 0.3s ease-in-out;
+
+    &__player {
+      position: relative;
+      min-width: 210px;
+      & .character-status__deselect {
+        position: absolute;
+        padding: 0 0 2em 2em;
+        right: 10px;
+        top: 5px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover {
+          color: $tertiary-color;
+        }
+      }
+    }
+  }
 }
 @media (min-width: 60rem) {
   .character-select {
@@ -147,11 +168,15 @@
       & > div {
         margin: 10px;
         & > .character-card {
+          position: relative;
           box-shadow: $box-shadow;
           display: flex;
           flex-direction: column;
           align-items: center;
           margin: 0 10px;
+          width: 180px;
+          height: 280px;
+
           & img {
             height: 100px;
             margin: 20px 10px 10px;
@@ -203,5 +228,22 @@
 
   .character-status {
     transition: all 0.3s ease-in-out;
+
+    &__player {
+      position: relative;
+      min-width: 210px;
+      & .character-status__deselect {
+        position: absolute;
+        padding: 0 0 2em 2em;
+        right: 10px;
+        top: 5px;
+        font-size: 20px;
+        font-weight: bold;
+        cursor: pointer;
+        &:hover {
+          color: $tertiary-color;
+        }
+      }
+    }
   }
 }
