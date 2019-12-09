@@ -84,8 +84,8 @@ export const gameTiles = [
   {
     x: 200,
     y: 400,
-    trap: new Trap('The Terrain', {
-      text: 'Is is difficult to move the arby forwards.',
+    trap: new Trap('The Marshes', {
+      text: 'It is difficult to move the army forwards.',
       type: 'return',
       amount: '1'
     }),

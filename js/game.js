@@ -14,6 +14,8 @@ const STATE = {
     this.currentPlayer.card.classList.add('card--active');
     this.waitingPlayer.card.classList.remove('card--active');
     addGameInteraction(`${this.currentPlayer.name}s turn.`, 'player-change');
+    changeButtonText();
+
     enableDiceBtn();
   },
   updatePlayerCard(currentPlayer = true) {
@@ -85,6 +87,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   };
   STATE.updatePlayerCard();
   STATE.updatePlayerCard(false);
+  STATE.currentPlayer.card.classList.add('card--active');
   window.__state__ = STATE;
   DICE_BTN.addEventListener('click', function(e) {
     disableDiceBtn();
@@ -380,4 +383,12 @@ function displayWinnerModal(player) {
 
 function redircetToFinale() {
   window.location.href = 'finale.html';
+}
+
+function changeButtonText() {
+  if (STATE.currentPlayer.trapped > 0) {
+    DICE_BTN.innerHTML = 'WAIT';
+  } else {
+    DICE_BTN.innerHTML = 'ROLL';
+  }
 }

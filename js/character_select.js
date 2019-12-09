@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   let playerTwoIsSet = false;
   const CHARACTERSTATUS_CONTAINER = document.getElementById('character-status');
   const BEGIN_BUTTON = document.getElementById('begin-btn');
-
+  const HOUSES_CONTAINER = document.querySelector('.houses');
+  const CHARACTER_CONTAINER = document.querySelector(
+    '.character-select__characters'
+  );
+  let houseArray = [];
   navigation();
 
   CHARACTERSTATUS_CONTAINER.addEventListener('click', function(e) {
@@ -24,12 +28,18 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       let player = e.target.parentElement.id;
       if (player === 'select-player-one') {
         playerOneIsSet = false;
+        localStorage.removeItem('player-one');
       }
       if (player === 'select-player-two') {
         playerTwoIsSet = false;
+        localStorage.removeItem('player-two');
       }
       e.target.parentElement.classList.add('character-status__player--hidden');
-      e.target.parentElement.innerHTML = '';
+      setTimeout(() => {
+        e.target.parentElement.innerHTML = '';
+      }, 400);
+
+      notReadyToPlay();
     }
   });
 
@@ -40,17 +50,17 @@ document.addEventListener('DOMContentLoaded', async function(event) {
       let player = e.target.parentElement.id;
       if (player === 'select-player-one') {
         playerOneIsSet = false;
+        localStorage.removeItem('player-one');
       }
       if (player === 'select-player-two') {
         playerTwoIsSet = false;
+        localStorage.removeItem('player-two');
       }
       e.target.parentElement.classList.add('character-status__player--hidden');
       e.target.parentElement.innerHTML = '';
+      notReadyToPlay();
     }
   });
-
-  let houseArray = [];
-  const HOUSES_CONTAINER = document.querySelector('.houses');
 
   // Counter to keep track of fetched GoTR houses
   let counter = 0;
@@ -70,10 +80,6 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     }
     HOUSES_CONTAINER.innerHTML += h.displayHouseSigilToDom();
   });
-
-  const CHARACTER_CONTAINER = document.querySelector(
-    '.character-select__characters'
-  );
 
   HOUSES_CONTAINER.addEventListener(
     'click',
@@ -170,14 +176,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     BEGIN_BUTTON.classList.remove('begin-btn--hidden');
   }
 
-  // function readyToShowCharacters() {
-  //   removeIntro();
-  //   showMainContent();
-  //   displayShowCharacterButton();
-  // }
-
-  // function displayShowCharacterButton() {
-  //   removeLoader();
-
-  // }
+  function notReadyToPlay() {
+    BEGIN_BUTTON.classList.add('begin-btn--hidden');
+  }
 });
