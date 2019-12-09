@@ -13,6 +13,7 @@ const STATE = {
     ];
     this.currentPlayer.card.classList.add('card--active');
     this.waitingPlayer.card.classList.remove('card--active');
+    addGameInteraction(`${this.currentPlayer.name}s turn.`, 'player-change');
     enableDiceBtn();
   },
   updatePlayerCard(currentPlayer = true) {
@@ -154,8 +155,8 @@ function moveTokenTo(token, pos, dir = 'FORWARDS', times = 1) {
 }
 
 function getRandomDiceResult() {
-  // let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 6) + 1;
-  let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 1) + 1;
+  let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 6) + 1;
+  // let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 1) + 6;
   return randomNumberBetweenOneAndSix;
 }
 
@@ -183,13 +184,13 @@ function checkForSix(moves) {
 function checkForTraps(pos, moves) {
   setTimeout(() => {
     if (pos && pos.trap != '') {
-      pos.trap.announceTrap();
       let trap = pos.trap.releaseTrap();
       switch (trap.type) {
         case 'freeze':
           STATE.currentPlayer.trapped = trap.amount;
           addGameInteraction(
-            `${STATE.currentPlayer.name} is held up by ${trap.character} and has to wait for ${trap.amount} turn(s): ${trap.text}`
+            `${STATE.currentPlayer.name} is held up by ${trap.character} and has to wait for ${trap.amount} turn(s): ${trap.text}`,
+            'trap'
           );
           break;
         case 'return':
@@ -197,7 +198,8 @@ function checkForTraps(pos, moves) {
           STATE.currentPlayer.return.amount = trap.amount;
           moveTileBackwards();
           addGameInteraction(
-            `${STATE.currentPlayer.name} encounters ${trap.character} and has to move back ${trap.amount} tiles: ${trap.text}`
+            `${STATE.currentPlayer.name} encounters ${trap.character} and has to move back ${trap.amount} tiles: ${trap.text}`,
+            'trap'
           );
           break;
         default:
@@ -217,7 +219,7 @@ function disableDiceBtn() {
 
 function checkForEndGame(moves) {
   setTimeout(() => {
-    if (STATE.currentPlayer.moved >= 30) {
+    if (STATE.currentPlayer.moved >= 31) {
       addGameInteraction(`${STATE.currentPlayer.name} has won the throne!`);
       setWinner({
         name: STATE.currentPlayer.name,
@@ -238,7 +240,10 @@ function rollDiceAndMove(token) {
   //  if player is on hold, change user
   if (STATE.currentPlayer.trapped > 0) {
     STATE.currentPlayer.trapped--;
-    addGameInteraction(`${STATE.currentPlayer.name} is still waiting`);
+    addGameInteraction(
+      `${STATE.currentPlayer.name} is still waiting`,
+      'waiting'
+    );
     STATE.changePlayer();
     STATE.updatePlayerCard();
     return;
@@ -251,7 +256,8 @@ function rollDiceAndMove(token) {
   setTimeout(() => {
     let moves = getRandomDiceResult();
     addGameInteraction(
-      `${STATE.currentPlayer.name} rolls a ${diceNumberToString(moves)}`
+      `${STATE.currentPlayer.name} rolls a ${diceNumberToString(moves)}`,
+      'dice-roll'
     );
 
     // If player rolls a six, store a status in rollDiceAgain
@@ -275,14 +281,17 @@ function rollDiceAndMove(token) {
       return;
     }
 
+    const IS_RETURNING = gameTiles[STATE.currentPlayer.moved - 1].trap != '';
+
     setTimeout(() => {
       let playerRolledSixAndIsNotTrapped =
         STATE.currentPlayer.rollDiceAgain &&
-        !STATE.currentPlayer.return.active &&
+        !IS_RETURNING &&
         STATE.currentPlayer.trapped < 1;
       if (playerRolledSixAndIsNotTrapped) {
         addGameInteraction(
-          `The six gives ${STATE.currentPlayer.name} a burst of energy! Roll again!`
+          `The six gives ${STATE.currentPlayer.name} a burst of energy! Roll again!`,
+          'six-roll'
         );
         enableDiceBtn();
       } else {
@@ -295,7 +304,7 @@ function rollDiceAndMove(token) {
           STATE.changePlayer();
         }
       }
-    }, 900 * moves);
+    }, 805 * moves);
     removeAnimationClass();
   }, 3000);
 }
@@ -351,15 +360,17 @@ function resetDice(moves) {
 }
 
 function checkIfPlannedMoveIsPastEnd(moves) {
-  if (moves + STATE.currentPlayer.moved >= 30) {
-    moves = moves - (moves + STATE.currentPlayer.moved - 30);
+  if (moves + STATE.currentPlayer.moved >= 31) {
+    moves = moves - (moves + STATE.currentPlayer.moved - 31);
   }
   return moves;
 }
 
 function setWinner(player) {
   localStorage.setItem('winner', JSON.stringify({ player }));
-  displayWinnerModal(player);
+  setTimeout(() => {
+    displayWinnerModal(player);
+  }, 1000);
 }
 
 function displayWinnerModal(player) {

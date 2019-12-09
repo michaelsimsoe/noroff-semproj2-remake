@@ -15,11 +15,7 @@ export const gameTiles = [
   {
     x: 160,
     y: 300,
-    trap: new Trap('Blizzard', {
-      text: 'The weather is impossible to move through. Back to Winterfell',
-      type: 'return',
-      amount: '2'
-    }),
+    trap: '',
     position: 'North of The Twins'
   },
   {
@@ -81,10 +77,20 @@ export const gameTiles = [
   {
     x: 260,
     y: 250,
-    trap: ''
+    trap: '',
+    position: 'Approaching the Riverlands'
   },
   { x: 220, y: 300, trap: '', position: 'Towards the Riverlands' },
-  { x: 200, y: 400, trap: '' },
+  {
+    x: 200,
+    y: 400,
+    trap: new Trap('The Terrain', {
+      text: 'Is is difficult to move the arby forwards.',
+      type: 'return',
+      amount: '1'
+    }),
+    position: 'Near Riverrun'
+  },
   { x: 180, y: 500, trap: '', position: 'Riverrun' },
   {
     x: 170,
@@ -93,36 +99,37 @@ export const gameTiles = [
       text: 'Ambushed by the Brotherhood. Retreat is the only option',
       type: 'return',
       amount: '2'
-    })
+    }),
+    position: 'South of Riverrun'
   },
-  { x: 160, y: 600, trap: '' },
-  { x: 160, y: 680, trap: '' },
+  { x: 160, y: 600, trap: '', position: 'Moving south' },
+  { x: 160, y: 680, trap: '', position: 'North of Highgarden' },
   {
     x: 170,
     y: 750,
-    trap: new Trap('Jack', {
-      text: 'Buhu',
+    trap: new Trap('The Tyrells', {
+      text: 'They are putting up a fight',
       type: 'freeze',
-      amount: '2'
+      amount: '1'
     }),
     position: 'Highgarden'
   },
-  { x: 210, y: 820, trap: '' },
-  { x: 270, y: 820, trap: '', position: 'In the South' },
+  { x: 210, y: 820, trap: '', position: 'Soyth of Highgarden' },
+  { x: 270, y: 820, trap: '', position: 'Nearing Dorne' },
   { x: 320, y: 820, trap: '', position: 'West of Sunspear' },
   { x: 400, y: 820, trap: '', position: 'Sunspear' },
   {
     x: 310,
     y: 810,
-    trap: new Trap('TRAP', {
-      text: 'Buhu',
+    trap: new Trap('The Dornish', {
+      text: 'An ambush! Typical attrition warfare from the southerners',
       type: 'freeze',
-      amount: '2'
+      amount: '1'
     }),
     position: 'West of Sunspear'
   },
-  { x: 250, y: 810, trap: '' },
-  { x: 200, y: 810, trap: '' },
+  { x: 250, y: 810, trap: '', position: 'Leaving Dorne' },
+  { x: 200, y: 810, trap: '', position: 'South of Highgarden' },
   { x: 160, y: 700, trap: '', position: 'Highgarden' },
   { x: 200, y: 650, trap: '', position: 'West of Kings Landing' },
   {
@@ -130,9 +137,9 @@ export const gameTiles = [
     y: 610,
     trap: new Trap('Sandor "The Hound" Clegane', {
       text:
-        "is charging you. He's massive and angry, and you need to retire back to safety. Back 4 tiles!",
+        "He is charging! He's massive and angry, and the army need to retire back to safety.",
       type: 'return',
-      amount: '4'
+      amount: '3'
     }),
     position: 'Outside the walls of Kings Landing'
   },

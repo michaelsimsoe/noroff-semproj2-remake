@@ -59,6 +59,10 @@
           text-align: center;
           margin: 5px 10px;
         }
+
+        &:hover {
+          box-shadow: $box-shadow-hover;
+        }
       }
     }
   }

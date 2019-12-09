@@ -38,8 +38,35 @@
     }
 
     &__item:nth-child(odd) {
-      background-color: $primary-color;
-      color: $background-color;
+      // background-color: $primary-color;
+      // color: $background-color;
+    }
+
+    & .interaction {
+      &-dice-roll {
+        &:before {
+          content: '\1F3B2';
+        }
+      }
+      &-player-change {
+        background-color: $background-color !important;
+        color: #000 !important;
+        font-size: 0.8em;
+        font-style: italic;
+        border-top: $golden-font solid 2px;
+      }
+      &-trap {
+        border-left: $tertiary-color solid 2px;
+      }
+      &-waiting {
+        &:before {
+          content: '\1F512';
+        }
+      }
+      &-six-roll {
+        background-color: $primary-color;
+        color: $background-color;
+      }
     }
   }
 }
@@ -82,8 +109,8 @@
       }
 
       &__item:nth-child(odd) {
-        background-color: $primary-color;
-        color: $background-color;
+        // background-color: $primary-color;
+        // color: $background-color;
       }
     }
   }
