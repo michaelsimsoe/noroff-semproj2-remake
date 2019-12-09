@@ -28,10 +28,11 @@ const STATE = {
     name.innerHTML = `${player.name}`;
     house.innerHTML = `of ${player.house}`;
     if (gameTiles[player.moved].position) {
-      position.innerHTML = `${gameTiles[player.moved].position}`;
+      // Need to decrement moved because of the way it is done in moveTileForwards()
+      position.innerHTML = `${gameTiles[player.moved - 1].position}`;
     }
     if (status && player.trapped > 0) {
-      status.innerHTML = `${player.name} is waitng for ${player.trapped} turns`;
+      status.innerHTML = `${player.name} is waitng for ${player.trapped} turn(s)`;
     }
     if (status && player.trapped < 1) {
       status.innerHTML = '';
@@ -60,7 +61,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     house: PLAYER_ONE.house,
     token: TOKEN_PLAYER_ONE,
     card: PLAYER_ONE_CARD,
-    moved: 0,
+    moved: 1,
     trapped: 0,
     return: {
       active: false,
@@ -73,7 +74,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     house: PLAYER_TWO.house,
     token: TOKEN_PLAYER_TWO,
     card: PLAYER_TWO_CARD,
-    moved: 0,
+    moved: 1,
     trapped: 0,
     return: {
       active: false,
@@ -136,16 +137,25 @@ function addGameInteraction(interaction, type = '') {
   `
   );
 }
-
-function moveTokenTo(token, pos, dir = 'FORWARDS') {
-  if (!pos) return; // Return if there are no more moves left in gameTiles
-  token.setAttribute('x', pos.x);
-  token.setAttribute('y', pos.y);
-  return;
+/**
+ *
+ * @param {element} token The player token to move
+ * @param {object} pos The x and y coordinates
+ * @param {string} dir Direction on movement (for debug)
+ * @param {number} times For consecutive token moves (TODO: make use of in FORWARD as well)
+ */
+function moveTokenTo(token, pos, dir = 'FORWARDS', times = 1) {
+  setTimeout(() => {
+    if (!pos) return; // Return if there are no more moves left in gameTiles
+    token.setAttribute('x', pos.x);
+    token.setAttribute('y', pos.y);
+    return;
+  }, 800 * times);
 }
 
 function getRandomDiceResult() {
-  let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 6) + 1;
+  // let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 6) + 1;
+  let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 1) + 1;
   return randomNumberBetweenOneAndSix;
 }
 
@@ -198,7 +208,6 @@ function checkForTraps(pos, moves) {
 }
 
 function enableDiceBtn() {
-  console.log('Enabling dice');
   DICE_BTN.disabled = false;
 }
 
@@ -258,7 +267,8 @@ function rollDiceAndMove(token) {
     moveTileForwards(moves);
 
     // After all move animations have ended, check if final tile contains trap
-    checkForTraps(gameTiles[STATE.currentPlayer.moved], moves);
+    // (Need to decrement moved because of the way it is done in moveTileForwards())
+    checkForTraps(gameTiles[STATE.currentPlayer.moved - 1], moves);
 
     // Checks if current player is at tile 30, if not it enables the dice button
     if (checkForEndGame(moves)) {
@@ -285,9 +295,9 @@ function rollDiceAndMove(token) {
           STATE.changePlayer();
         }
       }
-    }, 801 * moves);
+    }, 900 * moves);
     removeAnimationClass();
-  }, 2400);
+  }, 3000);
 }
 
 function moveTileForwards(moves) {
@@ -296,28 +306,31 @@ function moveTileForwards(moves) {
       STATE.currentPlayer.moved++;
       setTimeout(() => {
         moveTokenTo(STATE.currentPlayer.token, gameTiles[moveCount]);
-      }, 801 * i);
+      }, 802 * i);
     })(i, STATE.currentPlayer.moved);
   }
 }
 
 function moveTileBackwards() {
+  let end = STATE.currentPlayer.return.amount;
+  console.log(end);
   for (let i = 0; i <= STATE.currentPlayer.return.amount; i++) {
     (function(i) {
       setTimeout(() => {
+        console.log('MOVING BACKWARDS', STATE.currentPlayer);
         STATE.currentPlayer.moved--;
         moveTokenTo(
           STATE.currentPlayer.token,
           gameTiles[STATE.currentPlayer.moved],
-          'BACKWARDS'
+          'BACKWARDS',
+          i
         );
-        if (i === 2) {
+        if (i === +end) {
           STATE.currentPlayer.moved++;
           STATE.currentPlayer.return.amount = 0;
           STATE.currentPlayer.return.active = false;
-          STATE.changePlayer();
         }
-      }, 801 * i);
+      }, 0);
     })(i);
   }
 }

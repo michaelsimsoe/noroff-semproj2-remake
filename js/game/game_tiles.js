@@ -1,16 +1,26 @@
 import { Trap } from './trap.js';
 export const gameTiles = [
   {
-    x: 150,
-    y: 330,
+    x: 170,
+    y: 370,
     trap: '',
     position: 'The Twins'
   },
   {
+    x: 150,
+    y: 330,
+    trap: '',
+    position: 'Just north-east of The Twins'
+  },
+  {
     x: 160,
     y: 300,
-    trap: '',
-    position: 'Just north of The Twins'
+    trap: new Trap('Blizzard', {
+      text: 'The weather is impossible to move through. Back to Winterfell',
+      type: 'return',
+      amount: '2'
+    }),
+    position: 'North of The Twins'
   },
   {
     x: 140,
