@@ -94,6 +94,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     checkActiveDiceSideAndRemove();
     rollDiceAndMove(STATE.currentPlayer.token);
   });
+  TOKEN_PLAYER_ONE.addEventListener('mouseover', function(e) {});
 });
 
 function setUpPlayerToken(player, num) {
@@ -159,7 +160,7 @@ function moveTokenTo(token, pos, dir = 'FORWARDS', times = 1) {
 
 function getRandomDiceResult() {
   let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 6) + 1;
-  // let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 1) + 6;
+  // let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 1) + 4;
   return randomNumberBetweenOneAndSix;
 }
 
