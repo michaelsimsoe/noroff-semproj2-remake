@@ -8,6 +8,18 @@
     padding: 0.5em;
     transition: all 0.3s ease-in-out;
 
+    & p:first-of-type::first-letter {
+      font-family: 'Cinzel', serif;
+      font-weight: bold;
+      padding: 0.1rem 0.3rem 0.4rem;
+      margin: 0.1em 0.3rem 0px 0px;
+      border: 2px solid;
+      border-radius: 2px;
+      font-size: 4rem;
+      float: left;
+      line-height: 1;
+    }
+
     & .show-character-button {
       color: $golden-font;
       padding: 2em;

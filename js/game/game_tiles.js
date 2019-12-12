@@ -28,7 +28,8 @@ export const gameTiles = [
     x: 200,
     y: 260,
     trap: new Trap('Dire Wolfs', {
-      text: 'A whole pack of them. The army holds them off, but gets delayed.',
+      text:
+        'A whole pack of them. This far south? The army holds them off, but gets delayed.',
       type: 'freeze',
       amount: '1'
     }),

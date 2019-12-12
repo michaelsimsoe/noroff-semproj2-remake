@@ -62,6 +62,15 @@
   }
 }
 
+@media (min-width: 60rem) {
+  .dice__button {
+    padding: 1.5em;
+    &--hidden {
+      display: none;
+    }
+  }
+}
+
 // Dice styling
 .dice__side {
   border-radius: 3px;

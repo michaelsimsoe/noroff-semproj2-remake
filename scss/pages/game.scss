@@ -7,6 +7,7 @@
   max-height: 100vh;
 }
 .game {
+  z-index: 5;
   display: flex;
   margin-top: 3em;
   width: 100%;
@@ -93,10 +94,11 @@
 
       & .card {
         box-shadow: $box-shadow;
-        margin-bottom: 4em;
+        margin-bottom: 2em;
         padding: 1em;
         transition: all 0.4s ease-in;
-        width: 300px;
+        width: 280px;
+
         &--active {
           background-color: $primary-color;
           color: $background-color;
@@ -104,6 +106,32 @@
 
         & h3 {
           border-bottom: 2px $golden-font solid;
+          font-size: 1em;
+        }
+
+        & h4 {
+          font-size: 0.8em;
+        }
+
+        & h5 {
+          font-size: 0.7em;
+          font-style: italic;
+          min-height: 20px;
+        }
+
+        .dice__button {
+          width: 100%;
+        }
+
+        p {
+          font-size: 0.8em;
+          margin-top: 0.5em;
+          margin-bottom: 0.8em;
+        }
+
+        .player-position {
+          display: block;
+          font-weight: bold;
         }
       }
     }
