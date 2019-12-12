@@ -151,12 +151,18 @@ document.addEventListener('DOMContentLoaded', async function(event) {
     if (playerOneIsSet && playerTwoIsSet) {
       return;
     }
-    if (!playerOneIsSet) {
+    if (!playerOneIsSet && !isPlayerTaken(name)) {
       let one = CHARACTERSTATUS_CONTAINER.querySelector('#select-player-one');
       one.classList.remove('character-status__player--hidden');
       one.innerHTML = `<div class="character-status__deselect" tabindex="0">x</div><h4>Player One</h4><p>${name}</p>`;
       localStorage.setItem('player-one', JSON.stringify({ name, house }));
       playerOneIsSet = true;
+      if (playerOneIsSet && playerTwoIsSet) {
+        setTimeout(() => {
+          BEGIN_BUTTON.scrollIntoView();
+        }, 400);
+        readyToPlay();
+      }
       return;
     }
     if (isPlayerTaken(name)) return;
