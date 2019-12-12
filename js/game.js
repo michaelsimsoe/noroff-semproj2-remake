@@ -462,7 +462,7 @@ function redircetToFinale() {
  * Returns a random number between 1 and 6
  */
 function getRandomDiceResult() {
-  let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 1) + 6;
+  let randomNumberBetweenOneAndSix = Math.floor(Math.random() * 6) + 1;
   return randomNumberBetweenOneAndSix;
 }
 

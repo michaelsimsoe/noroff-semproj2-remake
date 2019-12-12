@@ -263,3 +263,23 @@
     }
   }
 }
+
+@media (min-width: 1700px) {
+  .character-select {
+    margin-top: 200px;
+  }
+
+  .character-select .houses {
+    width: 60%;
+  }
+}
+
+@media (min-width: 2000px) {
+  .character-select {
+    margin-top: 240px;
+  }
+
+  .character-select .houses {
+    width: 55%;
+  }
+}
