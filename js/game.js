@@ -449,7 +449,7 @@ function displayWinnerModal(player) {
 }
 
 /**
- * Sends the user to finale.html
+ * Sets location to finale.html
  */
 function redircetToFinale() {
   window.location.href = 'finale.html';
