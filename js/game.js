@@ -285,6 +285,7 @@ function setUpPlayerToken(player, num) {
             data-cy="player-token"
             x="170"
             y="370"
+            aria-label="player-${num}-token"
             xlink:href="assets/sigils/${houseName}_small.svg"
           ></image>`;
   WESTERORS_DRAWING.insertAdjacentHTML('afterend', token);

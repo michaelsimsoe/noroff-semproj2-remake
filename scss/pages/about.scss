@@ -1,0 +1,120 @@
+/*------------------------------------*\
+  #ABOUT PAGE
+\*------------------------------------*/
+.about {
+  article {
+    margin-top: 2em;
+  }
+
+  h3 {
+    margin-top: 0.8em;
+  }
+
+  h4 {
+    margin-top: 0.5em;
+  }
+
+  margin: 2em auto;
+  width: 100%;
+  padding: 0.5em;
+
+  &__intro {
+    & p:first-of-type::first-letter {
+      font-family: 'Cinzel', serif;
+      font-weight: bold;
+      padding: 0.1rem 0.3rem 0.4rem;
+      margin: 0.1em 0.3rem 0px 0px;
+      border: 2px solid;
+      border-radius: 2px;
+      font-size: 4rem;
+      float: left;
+      line-height: 1;
+    }
+  }
+
+  &__map {
+    max-height: 100vh;
+  }
+
+  figure {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  figcaption {
+    font-size: 0.7em;
+  }
+
+  &__sigil {
+    width: 100%;
+  }
+
+  &__token img {
+    width: 50%;
+  }
+}
+
+@media (min-width: 60rem) {
+  .about {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 9em;
+
+    &__game-materials {
+      & > section {
+        display: flex;
+        flex-wrap: wrap;
+        & h4 {
+          width: 100%;
+          border-bottom: $golden-font solid 2px;
+          margin-top: 1.2em;
+          margin-bottom: 0.8em;
+        }
+        & figure {
+          width: 50%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-end;
+
+          & > figcaption {
+            align-self: flex-end;
+          }
+        }
+      }
+    }
+    &__sigil img {
+      width: 40%;
+    }
+
+    &__token img {
+      width: 20%;
+    }
+
+    &__throne {
+      & img {
+        max-height: 50vh;
+      }
+    }
+
+    &__external-resources {
+      display: flex;
+      flex-direction: column;
+      header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      & section {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    &__svg {
+      width: 20%;
+      margin: 1em 0.5em;
+    }
+  }
+}

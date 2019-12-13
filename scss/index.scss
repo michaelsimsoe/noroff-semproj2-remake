@@ -4,7 +4,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   min-height: 100vh;
-  background-image: url('../../assets/misc/bcg.jpg');
+  background-image: url('../assets/misc/bcg.jpg');
 }
 
 @import 'misc/variables';
@@ -20,3 +20,4 @@ body {
 @import 'pages/character';
 @import 'pages/game';
 @import 'pages/finale';
+@import 'pages/about';
