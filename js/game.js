@@ -19,6 +19,8 @@ const STATE = {
     this.currentPlayer.card.querySelector('.dice__button').disabled = false;
     this.waitingPlayer.card.querySelector('.dice__button').disabled = true;
     this.waitingPlayer.card.classList.remove('card--active');
+    this.waitingPlayer.card.querySelector('.dice__button').innerHTML =
+      'Waiting';
     addGameInteraction(`${this.currentPlayer.name}s turn.`, 'player-change');
     changeButtonText();
 
@@ -133,6 +135,7 @@ document.addEventListener('DOMContentLoaded', async function(event) {
   STATE.updatePlayerCard(false);
   // Show which player starts
   STATE.currentPlayer.card.classList.add('card--active');
+  STATE.waitingPlayer.card.querySelector('.dice__button').innerHTML = 'Waiting';
 
   // Exported for testing purposes (cypress)
   window.__state__ = STATE;
