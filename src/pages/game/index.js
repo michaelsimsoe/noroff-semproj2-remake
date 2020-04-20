@@ -7,7 +7,7 @@ import { GameBoard } from './boardGame';
 export const Game = () => {
   return (
     <>
-      <main class="game">
+      <main className="game">
         <GameInteractions />
         <GameBoard />
         <PlayerCard />

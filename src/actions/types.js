@@ -1,0 +1,2 @@
+export const FETCH_CHARACTER = 'FETCH_CHARACTER';
+export const FETCH_HOUSE = 'FETCH_HOUSES';
