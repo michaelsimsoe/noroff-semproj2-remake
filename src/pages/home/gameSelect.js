@@ -1,39 +1,73 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { HouseSigil } from './houseSigil';
+import { CharacterCard } from './characterCard';
+import { SelectedCharacter } from './selectedCharacter';
 
-export const GameSelect = () => {
+export const GameSelect = (props) => {
+  const [selectedHouse, setSelectedHouse] = useState(null);
+  const mainSectionClass = props.select ? 'houses' : 'houses  hidden-content';
+  const characterSectionClass = props.select
+    ? 'character-status'
+    : 'character-status hidden-content';
+  const playButtonClass = props.readyToPlay
+    ? 'begin-btn'
+    : 'begin-btn begin-btn--hidden';
+  let houses = [];
+  let characters = [];
+  const selectHouse = (house) => {
+    setSelectedHouse(house);
+  };
+  if (props.houses) {
+    houses = props.houses.map((house) => {
+      return (
+        <HouseSigil key={house.name} house={house} selectHouse={selectHouse} />
+      );
+    });
+  }
+
+  if (props.characters && selectedHouse) {
+    characters = props.characters
+      .filter((character) => character.house === selectedHouse)
+      .map((character) => {
+        return (
+          <CharacterCard
+            key={character.name}
+            character={character}
+            selectCharacter={props.selectCharacter}
+          />
+        );
+      });
+  }
+
   return (
     <>
-      <section
-        className="houses hidden-content"
-        id="character-select-houses"
-      ></section>
+      <section className={mainSectionClass} id="character-select-houses">
+        {houses}
+      </section>
       <section
         id="character-select__characters"
         className="character-select__characters"
-      ></section>
-      <section
-        className="character-status hidden-content"
-        id="character-status"
       >
-        <div
-          className="character-status__player character-status__player--hidden"
-          id="select-player-one"
-        ></div>
-        <div
-          className="character-status__player character-status__player--hidden"
-          id="select-player-two"
-        ></div>
-        <a
-          className="begin-btn begin-btn--hidden"
-          data-cy="begin-btn"
-          id="begin-btn"
-          href="game.html"
-        >
+        <div>{characters}</div>
+      </section>
+      <section className={characterSectionClass} id="character-status">
+        {props.selectedCharacter.map((character, index) => {
+          return (
+            <SelectedCharacter
+              key={character}
+              player={index === 0 ? 'one' : 'two'}
+              character={character}
+              unsetCharacter={props.unsetCharacter}
+            />
+          );
+        })}
+        <Link className={playButtonClass} to="/game">
           <span className="begin-btn__text">
             Let The Board Game of Thrones Begin
           </span>
           <span className="begin-btn__caret">></span>
-        </a>
+        </Link>
       </section>
     </>
   );

@@ -53,7 +53,7 @@ export const GameBoard = () => {
                 <path
                   stroke="#000"
                   fill="#d7cbab"
-                  stroke-linejoin="round"
+                  strokeLinejoin="round"
                   d="M500.43 862.5l-3 8-16 10-9 7-18-1-4 5-1 5-8 1-7 5v5h-12l-9 3-8-1-9-4-8 3-14 2 1-7-8-1-11 2-8.32 1.7-8.68-1.7-9-8-10 1-10 3-7 9-15 3-11-7-13-2-2 3-12 2-13 1-14 1-8-2-4-6-25 8h-22l-16 1-14-8 3-17-6-15-19 6-38 13-16-18-13-5-8-13 25-24-8-2-22 13-12-5 1-13-10-8 5-11 12-21 19-1 1-9 18-18 23 10-14-12-2-8h22l4-3-5-6-10-4 2-6-12-1-11-4-1-5-15-1-8-15-9-7 6-10-5-8 3-17 11-8 2-9-5-7 12.5-15.5 2.5-8.5 3-8-21 4-19 8-10-6 14-13 21-10 28-12 5-14 5-15 9-9-6-12 4-11 8-2 14.32 1.38 6.68 3.62 12-1 18-2h22l10-11 23-3 5-22-8-7-29 7h-13l-8-5 2-8 25-11-28-25-20-11-18-4-49 9-30 1-17-6-7-9 1-7 14-12 6.42-12.95 8.58-3.05 6.79-.44 13.21 9.44 12 5v-12l10-3 15-13 19-1 20 3 46-12h-25l-29 4-16-6-14.88 5.31-13.12 4.69-10.69-.11-16.31-7.89-13-12-8-20v-13l-12 6-17 6-2-15-3-15-.93-9.86 16.93-31.14 41-20v-12l18-11 4-16-6-10-17-4 5.35-3.3 11.65-10.7 16 8 17 9 7 14 30-11-5-15 2-6 17 14 26-3 22-10-4-9 5-12-9-16 36-18 2-9-32-2-15-6v-8l30-12-24-4-14 1-23 19-20.87 18.11-9.13 5.89-28-14-31-13-3-10-24 3-9-7-19-10 2-12-2-12 15-7-6-9L20.26 1h73.33L290.43.5l13.01 3.88 18.99 8.12 17 3 16 12 3 10h15l5-9 4.51-.42 5.49 7.42 6-4-2-12 11 2 5 11-1 19-11 3v8l-17 8 6 19 7 6 8 10 5 26h10l22 4 13 7 13-4 25-3 12 29-15 27 4 17-6 6-10-22-12-2-3 22-19 8 3 6-11 6-13-5-6 10 15 7v15h-9l-1 4 22 16 6 12-6 6 23 12 9 2 1 7-10-1-14-3-13-2-15-4-15-3-10 21-.81 14.92-10.19 15.08-15 4-10 3-5-4-11-4-7.92 5.91-12.08 4.09 1-11-9-1-6-18-4-5-2 27-9 12-18 19 3 9-2 7-9-1-4 8 7 7 20 2 30-8 16-1 6-4 26 1 14-9 20-2-1 9 27-2 24-15 9 4-26 17 24-8-10 15 26-4-17 10 20.9-4.97 14.1-1.03-23 10-40 13-7 9 43-8 30-10 5 9-21 13 8.74 1.38 10.26 1.62 10 14-9.54 6.75-13.46 6.25-12 4.5-28 10.5 42.59-7.31 18.41-2.69.92 8.6.99 9.3 1.09 10.1-11.83 1.53-30.17 3.47-14-9-5 7 6 6 5 11-12 5-9.67 7.96-7.33 6.04-11.35 2.04-24.65-.04-3 5 17 5 30-6 21-7 26-17h6l-11 22 2 8-11 11-16 2-19 8-25 1-6 21-13 23-24 10-22 2 6 8 42-8 15-5 9 8 30-18 3-15 7-1 13 15-23 30-7 6v7l11-3 19 7-8 11 3 7-10 4-14 7-1 18-6 7-34 3 4 10 17 3 6 7 12 1-4-5 6-5 6 5 17 7 22-6 8 4-38 22-4 12 5 6-11 6h-11l-6-5-9-4-10-4-15.33 2.84-11.19-1.5-9.21-1.23-8.27-1.11 2-8-7-8-7 12-11.82 4.98-20.18-1.98-44 43 26 2 39 4 29 12 33-1 33 6 35-13 15-1-5 14 14-4 8 1-1 5-7 9z"
                 />
                 <g className="cls-2">
@@ -94,10 +94,10 @@ export const GameBoard = () => {
                   <text
                     transform="translate(245.53 439.33)"
                     style={{ isolation: 'isolate' }}
-                    letter-spacing="-.04em"
-                    font-size="12"
-                    font-family="MyriadPro-Semibold,Myriad Pro"
-                    font-weight="600"
+                    letterSpacing="-.04em"
+                    fontSize="12"
+                    fontFamily="MyriadPro-Semibold,Myriad Pro"
+                    fontWeight="600"
                   >
                     T
                   </text>
@@ -227,7 +227,7 @@ export const GameBoard = () => {
                   ></text>
                   <text className="cls-4" transform="translate(97.56 618)">
                     l
-                    <tspan x="3.08" y="0" letter-spacing="0">
+                    <tspan x="3.08" y="0" letterSpacing="0">
                       e
                     </tspan>
                     <tspan x="9.24" y="0">
@@ -322,10 +322,10 @@ export const GameBoard = () => {
                   <text
                     transform="translate(200.93 228)"
                     style={{ isolation: 'isolate' }}
-                    letter-spacing="-.02em"
-                    font-size="12"
-                    font-family="MyriadPro-Semibold,Myriad Pro"
-                    font-weight="600"
+                    letterSpacing="-.02em"
+                    fontSize="12"
+                    fontFamily="MyriadPro-Semibold,Myriad Pro"
+                    fontWeight="600"
                   >
                     W
                   </text>
@@ -364,10 +364,10 @@ export const GameBoard = () => {
                   <text
                     transform="translate(230.22 228)"
                     style={{ isolation: 'isolate' }}
-                    letter-spacing=".03em"
-                    font-size="12"
-                    font-family="MyriadPro-Semibold,Myriad Pro"
-                    font-weight="600"
+                    letterSpacing=".03em"
+                    fontSize="12"
+                    fontFamily="MyriadPro-Semibold,Myriad Pro"
+                    fontWeight="600"
                   >
                     r
                   </text>
@@ -408,7 +408,7 @@ export const GameBoard = () => {
                   ></text>
                   <text className="cls-4" transform="translate(54.69 514)">
                     y
-                    <tspan x="6" y="0" letter-spacing="-.01em">
+                    <tspan x="6" y="0" letterSpacing="-.01em">
                       k
                     </tspan>
                     <tspan x="12.02" y="0">
@@ -446,9 +446,9 @@ export const GameBoard = () => {
                   </text>
                 </g>
                 <path
-                  stroke-linecap="round"
-                  stroke-miterlimit="10"
-                  stroke-width="5"
+                  strokeLinecap="round"
+                  strokeMiterlimit="10"
+                  strokeWidth="5"
                   fill="none"
                   stroke="#000"
                   d="M224.93 72h154"

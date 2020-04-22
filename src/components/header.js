@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export const Header = () => {
+export const Header = (props) => {
+  const [openMenuBtn, setOpenMenuBtn] = useState(false);
+  const openMenu = () => {
+    setOpenMenuBtn(!openMenuBtn);
+    props.openMenu();
+  };
+  const menuBtnClassName = openMenuBtn
+    ? 'main-header__hamburger open'
+    : 'main-header__hamburger';
   return (
     <header className="main-header">
       <div className="logo">
-        <a href="index.html">
+        <Link to="/">
           <svg
             className="logo__image"
             xmlns="http://www.w3.org/2000/svg"
@@ -29,7 +39,7 @@ export const Header = () => {
             <br />
             of Thrones
           </h1>
-        </a>
+        </Link>
       </div>
       <svg
         className="main-header__background"
@@ -49,7 +59,8 @@ export const Header = () => {
         </g>
       </svg>
       <div
-        className="main-header__hamburger"
+        onClick={openMenu}
+        className={menuBtnClassName}
         id="menu"
         role="button"
         tabIndex="0"

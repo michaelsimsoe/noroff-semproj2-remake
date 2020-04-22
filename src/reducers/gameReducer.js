@@ -1,16 +1,17 @@
-import { FETCH_CHARACTER, FETCH_HOUSE } from '../actions/types';
+import { SELECT_CHARACTER, REMOVE_CHARACTER } from '../actions/types';
 
-export default (state = {}, action) => {
+export default (state = { players: [] }, action) => {
   switch (action.type) {
-    case FETCH_CHARACTER:
-      const characterName = action.payload.character.name;
-      return {
-        ...state,
-        characters: { [characterName]: action.payload.character },
-      };
-    case FETCH_HOUSE:
-      const houseName = action.payload.house.name;
-      return { ...state, houses: { [houseName]: action.payload.house } };
+    case SELECT_CHARACTER:
+      if (state.players.length >= 2) return state;
+      if (state.players.includes(action.payload.character)) return state;
+      const playersArray = [...state.players, action.payload.character];
+      return { ...state, players: playersArray };
+    case REMOVE_CHARACTER:
+      const reducedPlayersArray = state.players.filter(
+        (player) => player !== action.payload.character
+      );
+      return { ...state, players: reducedPlayersArray };
     default:
       return state;
   }

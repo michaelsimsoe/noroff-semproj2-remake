@@ -1,7 +1,12 @@
-import { FETCH_CHARACTER, FETCH_HOUSE } from './types';
+import {
+  FETCH_CHARACTER,
+  FETCH_HOUSE,
+  SELECT_CHARACTER,
+  REMOVE_CHARACTER,
+} from './types';
 const API = 'https://www.anapioficeandfire.com/api/';
 
-export const fetchCharacter = (character) => {
+export const fetchCharacter = (character, house) => {
   const URL = `${API}characters?name=${encodeURI(character)}`;
   return async (dispatch) => {
     try {
@@ -13,7 +18,10 @@ export const fetchCharacter = (character) => {
       dispatch({
         type: FETCH_CHARACTER,
         payload: {
-          character: data[0],
+          character: {
+            house,
+            ...data[0],
+          },
         },
       });
       // return await data[0];
@@ -48,5 +56,23 @@ export const fetchHouse = (house) => {
         error.message
       );
     }
+  };
+};
+
+export const selectCharacter = (character) => {
+  return {
+    type: SELECT_CHARACTER,
+    payload: {
+      character,
+    },
+  };
+};
+
+export const removeCharacter = (character) => {
+  return {
+    type: REMOVE_CHARACTER,
+    payload: {
+      character,
+    },
   };
 };

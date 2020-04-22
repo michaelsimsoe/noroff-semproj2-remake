@@ -1,30 +1,18 @@
 import React from 'react';
+import { Player } from './player';
 
-export const PlayerCard = () => {
+export const PlayerCards = (props) => {
   return (
     <section className="game__player-cards">
-      <div className="card player-one-card" id="player-one-card">
-        <h3>Player One</h3>
-        <h4>.</h4>
-        <h5>.</h5>
-        <p>
-          Last known position: <span className="player-position"></span>
-        </p>
-        <button id="dice-btn-1" className="dice__button">
-          ROLL
-        </button>
-      </div>
-      <div className="card player-two-card" id="player-two-card">
-        <h3>Player Two</h3>
-        <h4>.</h4>
-        <h5>.</h5>
-        <p>
-          Last known position: <span className="player-position"></span>
-        </p>
-        <button id="dice-btn-2" className="dice__button">
-          ROLL
-        </button>
-      </div>
+      {props.players.map((player) => {
+        return (
+          <Player
+            key={player[0].name}
+            player={player[0]}
+            rollDice={props.roundAction}
+          />
+        );
+      })}
     </section>
   );
 };

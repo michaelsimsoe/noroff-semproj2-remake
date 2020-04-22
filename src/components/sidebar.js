@@ -1,9 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export const Sidebar = () => {
+export const Sidebar = (props) => {
+  const sideBarClass = props.open
+    ? 'main-navigation main-navigation--open'
+    : 'main-navigation';
   return (
-    <aside className="main-navigation" id="main-navigation">
+    <aside className={sideBarClass} id="main-navigation">
       <nav className="navigation">
         <div className="navigation__item">
           <NavLink to="/">Start Again</NavLink>
