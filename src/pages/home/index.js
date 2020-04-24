@@ -37,6 +37,7 @@ export const Home = () => {
     if (count === 5) {
       setLoading(false);
     }
+    // eslint-disable-next-line
   }, [dispatch]);
 
   const showCharacterSelect = () => {

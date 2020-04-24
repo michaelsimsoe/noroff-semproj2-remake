@@ -8,7 +8,7 @@ export const GameInteractions = (props) => {
         <h2>The story</h2>
         <ul className="story-board__list" id="story-board-list"></ul>
       </div>
-      <Dice diceRolled={props.diceRolled} />
+      <Dice rollDice={props.rollDice} diceRolled={props.diceRolled} />
     </section>
   );
 };

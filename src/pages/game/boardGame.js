@@ -1,6 +1,7 @@
 import React from 'react';
+import { PlayerToken } from './playerToken';
 
-export const GameBoard = () => {
+export const GameBoard = (props) => {
   return (
     <section className="game__board">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 511.93 913">
@@ -531,6 +532,16 @@ export const GameBoard = () => {
             <path d="M261.1 684.17a8.86 8.86 0 01-1.32-.79 6.17 6.17 0 01-.79-.75 14.13 14.13 0 00.33 2.59c.11.47.22.93.33 1.35a2.64 2.64 0 00-.31 2.94 8.31 8.31 0 00-.71.52c-.5.41-.52.52-.52.61s.13.24.49.38a3.19 3.19 0 002.56.11c.22-.11.38-.19.44-.36.14-.35-.3-.63-.22-1.15a2.43 2.43 0 01.3-.63c.28-.47.41-.55.52-.77a1.53 1.53 0 00-.08-1.35 6.35 6.35 0 00.74-1 7.3 7.3 0 00.5-1 8 8 0 01-.83-.14 14.94 14.94 0 01-1.43-.56z" />
           </g>
         </g>
+        {props.players.map((player, index) => {
+          return (
+            <PlayerToken
+              key={player[0].name}
+              player={player[0]}
+              num={index}
+              move={props.moveToken}
+            />
+          );
+        })}
       </svg>
     </section>
   );

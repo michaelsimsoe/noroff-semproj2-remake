@@ -4,12 +4,12 @@ import { Player } from './player';
 export const PlayerCards = (props) => {
   return (
     <section className="game__player-cards">
-      {props.players.map((player) => {
+      {props.players.map((player, index) => {
         return (
           <Player
             key={player[0].name}
             player={player[0]}
-            rollDice={props.roundAction}
+            newRound={props.newRound}
           />
         );
       })}

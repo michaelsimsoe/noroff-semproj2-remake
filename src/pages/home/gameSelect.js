@@ -55,9 +55,9 @@ export const GameSelect = (props) => {
         {props.selectedCharacter.map((character, index) => {
           return (
             <SelectedCharacter
-              key={character}
+              key={character.name}
               player={index === 0 ? 'one' : 'two'}
-              character={character}
+              character={character.name}
               unsetCharacter={props.unsetCharacter}
             />
           );

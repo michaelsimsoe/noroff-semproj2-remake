@@ -3,6 +3,11 @@ import {
   FETCH_HOUSE,
   SELECT_CHARACTER,
   REMOVE_CHARACTER,
+  DICE_ROLLING,
+  SET_CURRENT_PLAYER,
+  ADD_MOVES_TO_PLAYER,
+  MOVE_TOKEN,
+  REGISTER_PLAYER_TOKEN,
 } from './types';
 const API = 'https://www.anapioficeandfire.com/api/';
 
@@ -73,6 +78,54 @@ export const removeCharacter = (character) => {
     type: REMOVE_CHARACTER,
     payload: {
       character,
+    },
+  };
+};
+
+export const setDiceRoll = (diceNumber, rolling) => {
+  return {
+    type: DICE_ROLLING,
+    payload: {
+      rolling,
+      diceNumber,
+    },
+  };
+};
+
+export const setCurrentPlayer = (player) => {
+  return {
+    type: SET_CURRENT_PLAYER,
+    payload: {
+      player,
+    },
+  };
+};
+
+export const movePlayer = (moving) => {
+  return {
+    type: MOVE_TOKEN,
+    payload: {
+      moving,
+    },
+  };
+};
+
+export const addMovesToPlayer = (player, moves) => {
+  return {
+    type: ADD_MOVES_TO_PLAYER,
+    payload: {
+      player,
+      moves,
+    },
+  };
+};
+
+export const registerPlayerToken = (player, token) => {
+  return {
+    type: REGISTER_PLAYER_TOKEN,
+    payload: {
+      player,
+      token,
     },
   };
 };
