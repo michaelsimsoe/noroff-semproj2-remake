@@ -8,6 +8,7 @@ import {
   ADD_MOVES_TO_PLAYER,
   MOVE_TOKEN,
   REGISTER_PLAYER_TOKEN,
+  SET_PLAYER_TRAPPED,
 } from './types';
 const API = 'https://www.anapioficeandfire.com/api/';
 
@@ -126,6 +127,16 @@ export const registerPlayerToken = (player, token) => {
     payload: {
       player,
       token,
+    },
+  };
+};
+
+export const trapPlayer = (player, trap) => {
+  return {
+    type: SET_PLAYER_TRAPPED,
+    payload: {
+      player,
+      trap,
     },
   };
 };

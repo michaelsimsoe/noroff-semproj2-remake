@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { HouseSigil } from './houseSigil';
 import { CharacterCard } from './characterCard';
@@ -6,6 +6,7 @@ import { SelectedCharacter } from './selectedCharacter';
 
 export const GameSelect = (props) => {
   const [selectedHouse, setSelectedHouse] = useState(null);
+  const startButtonRef = useRef();
   const mainSectionClass = props.select ? 'houses' : 'houses  hidden-content';
   const characterSectionClass = props.select
     ? 'character-status'
@@ -13,6 +14,14 @@ export const GameSelect = (props) => {
   const playButtonClass = props.readyToPlay
     ? 'begin-btn'
     : 'begin-btn begin-btn--hidden';
+  if (props.readyToPlay) {
+    setTimeout(() => {
+      startButtonRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 350);
+  }
   let houses = [];
   let characters = [];
   const selectHouse = (house) => {
@@ -62,7 +71,7 @@ export const GameSelect = (props) => {
             />
           );
         })}
-        <Link className={playButtonClass} to="/game">
+        <Link ref={startButtonRef} className={playButtonClass} to="/game">
           <span className="begin-btn__text">
             Let The Board Game of Thrones Begin
           </span>

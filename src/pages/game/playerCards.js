@@ -10,6 +10,7 @@ export const PlayerCards = (props) => {
             key={player[0].name}
             player={player[0]}
             newRound={props.newRound}
+            moving={props.moving}
           />
         );
       })}

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { GameInteractions } from './gameInteraction';
@@ -11,10 +11,23 @@ import {
   setDiceRoll,
   addMovesToPlayer,
 } from '../../actions/index';
+
 import { gameTiles } from './assets/game_tiles';
+import {
+  localInitialState,
+  localReducer,
+  addNewTrapAction,
+  removeTrapAmount,
+} from './localState';
 
 export const Game = () => {
+  const [localState, localDispatch] = useReducer(
+    localReducer,
+    localInitialState
+  );
   const [diceRolling, setDiceRolling] = useState(null);
+  const [playerMoving, setPlayerMoving] = useState(false);
+  const [gameStories, setGameStories] = useState([]);
   const [movePosition, setMovePosition] = useState({
     player: null,
     x: '170',
@@ -43,6 +56,16 @@ export const Game = () => {
   }
 
   const newRound = (diceNumber) => {
+    console.log(localState);
+    const currentPlayer = state.game.gameState.currentPlayer.name;
+    if (
+      localState[currentPlayer] &&
+      localState[currentPlayer].trap.consequence.amount > 0
+    ) {
+      localDispatch(removeTrapAmount(currentPlayer));
+      changeCurrentPlayer();
+      return;
+    }
     setDiceRolling(diceNumber);
     dispatch(setDiceRoll(diceNumber, true));
   };
@@ -50,29 +73,76 @@ export const Game = () => {
   const diceRolled = () => {
     setDiceRolling(false);
     dispatch(setDiceRoll(state.game.gameState.diceNumber, false));
+    addStoryItem(
+      state.game.gameState.currentPlayer,
+      `${state.game.gameState.currentPlayer.name} rolls a ${state.game.gameState.diceNumber}`,
+      'dice-roll'
+    );
     movePlayer();
   };
 
-  const movePlayer = () => {
-    let moved = 0;
+  const movePlayer = (number = null) => {
+    let moved = 1;
+    const amount = number ? number : state.game.gameState.diceNumber;
+    setPlayerMoving(true);
     const moves = setInterval(() => {
-      if (moved < state.game.gameState.diceNumber) {
-        console.log(fetchPlacementForCurrentPlayer());
+      let currentPlayer = state.game.gameState.currentPlayer.name;
+      if (moved <= amount) {
+        let placement = fetchPlacementForCurrentPlayer() + moved;
+        let xPosition = gameTiles[placement].x;
+        let yPosition = gameTiles[placement].y;
         setMovePosition({
-          player: state.game.gameState.currentPlayer.name,
-          x: gameTiles[fetchPlacementForCurrentPlayer() + moved + 1].x,
-          y: gameTiles[fetchPlacementForCurrentPlayer() + moved + 1].y,
+          player: currentPlayer,
+          x: xPosition,
+          y: yPosition,
         });
         moved++;
       } else {
+        let currentPosition = fetchPlacementForCurrentPlayer() + amount;
         clearInterval(moves);
+        setPlayerMoving(false);
+        checkForTrap(currentPosition, currentPlayer);
         dispatch(
-          addMovesToPlayer(
-            state.game.gameState.currentPlayer.name,
-            state.game.gameState.diceNumber
-          )
+          addMovesToPlayer(state.game.gameState.currentPlayer.name, amount)
+        );
+        if (amount === 6) {
+          const randomNumberBetweenOneAndSix =
+            Math.floor(Math.random() * 6) + 1;
+          addStoryItem(
+            'game',
+            `${currentPlayer} rolls a six. Please go again!`,
+            'six-roll'
+          );
+          movePlayer(randomNumberBetweenOneAndSix);
+          return;
+        }
+        changeCurrentPlayer();
+      }
+    }, 1000);
+  };
+
+  const movePlayerBackwards = (player, amount, startPosition) => {
+    let moved = -1;
+    setPlayerMoving(true);
+    const moves = setInterval(() => {
+      if (moved >= amount - 1) {
+        let placement = startPosition + moved;
+        let xPosition = gameTiles[placement].x;
+        let yPosition = gameTiles[placement].y;
+        setMovePosition({
+          player: player,
+          x: xPosition,
+          y: yPosition,
+        });
+        moved--;
+      } else {
+        clearInterval(moves);
+        setPlayerMoving(false);
+        dispatch(
+          addMovesToPlayer(state.game.gameState.currentPlayer.name, amount)
         );
         changeCurrentPlayer();
+        addStoryItem('game', 'Changing player', 'player-change');
       }
     }, 1000);
   };
@@ -80,8 +150,18 @@ export const Game = () => {
   const changeCurrentPlayer = () => {
     const currentPlayer = state.game.gameState.currentPlayer.name;
     if (currentPlayer === players[0][0].name) {
+      addStoryItem(
+        'game',
+        `${setCurrentPlayer(players[1][0]).name}s turn`,
+        'player-change'
+      );
       dispatch(setCurrentPlayer(players[1][0]));
     } else {
+      addStoryItem(
+        'game',
+        `${setCurrentPlayer(players[0][0]).name}s turn`,
+        'player-change'
+      );
       dispatch(setCurrentPlayer(players[0][0]));
     }
   };
@@ -91,16 +171,58 @@ export const Game = () => {
     const moves = state.game.players.filter(
       (player) => player.name === currentPlayer
     );
-    console.log('moves', moves[0].moves);
     return moves[0].moves;
+  };
+
+  const checkForTrap = (placement, player) => {
+    if (gameTiles[placement].trap !== '') {
+      console.log(gameTiles[placement].trap);
+      if (gameTiles[placement].trap.consequence.type === 'return') {
+        addStoryItem(
+          player,
+          `${player} is in trouble: ${
+            gameTiles[placement].trap.releaseTrap().text
+          }`,
+          'trap'
+        );
+        movePlayerBackwards(
+          player,
+          -Math.abs(+gameTiles[placement].trap.consequence.amount),
+          placement
+        );
+      } else {
+        addStoryItem(
+          player,
+          `${player} is in trouble: ${
+            gameTiles[placement].trap.releaseTrap().text
+          }`,
+          'trap'
+        );
+        localDispatch(addNewTrapAction(player, gameTiles[placement].trap));
+      }
+    }
+  };
+
+  const addStoryItem = (player, story, type) => {
+    setGameStories((prevState) => {
+      return [...prevState, { player, type, story }];
+    });
   };
 
   return (
     <>
       <main className="game">
-        <GameInteractions rollDice={diceRolling} diceRolled={diceRolled} />
+        <GameInteractions
+          rollDice={diceRolling}
+          diceRolled={diceRolled}
+          stories={gameStories}
+        />
         <GameBoard players={players} moveToken={movePosition} />
-        <PlayerCards players={players} newRound={newRound} round />
+        <PlayerCards
+          players={players}
+          newRound={newRound}
+          moving={playerMoving}
+        />
       </main>
       <FinaleModal />
     </>
