@@ -1,12 +1,23 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+
+import { resetGame } from '../../actions/index';
 
 export const Finale = () => {
+  const state = useSelector((state) => state);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(resetGame());
+  });
+  if (!state.game.winner) {
+    return <Redirect to="/" />;
+  }
   return (
     <main className="finale">
       <h2>The winner of the throne is</h2>
-      <h3 id="finale-sub-heading" data-cy="winner-heading">
-        LORD DONK OF DONKUS
-      </h3>
+      <h3 id="finale-sub-heading">{state.game.winner}</h3>
       <div className="finale__throne">
         <svg
           className="throne"
@@ -959,9 +970,9 @@ export const Finale = () => {
           </g>
         </svg>
       </div>
-      <a id="play-again-btn" className="play-again-btn" href="index.html">
+      <Link id="play-again-btn" className="play-again-btn" to="/">
         Play Again?
-      </a>
+      </Link>
     </main>
   );
 };

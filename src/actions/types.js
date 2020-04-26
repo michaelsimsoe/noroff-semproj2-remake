@@ -11,3 +11,4 @@ export const MOVE_TOKEN = 'MOVE_TOKEN';
 export const SET_PLAYER_TRAPPED = 'SET_PLAYER_TRAPPED';
 export const PLAYER_RETURN = 'PLAYER_RETURN';
 export const SET_WINNER = 'SET_WINNER';
+export const RESET_GAME = 'RESET_GAME';

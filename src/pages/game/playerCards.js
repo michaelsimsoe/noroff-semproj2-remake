@@ -11,6 +11,7 @@ export const PlayerCards = (props) => {
             player={player[0]}
             newRound={props.newRound}
             moving={props.moving}
+            position={props.position}
           />
         );
       })}

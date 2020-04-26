@@ -10,6 +10,7 @@ import {
   setCurrentPlayer,
   setDiceRoll,
   addMovesToPlayer,
+  setGameWinner,
 } from '../../actions/index';
 
 import { gameTiles } from './assets/game_tiles';
@@ -28,6 +29,7 @@ export const Game = () => {
   const [diceRolling, setDiceRolling] = useState(null);
   const [playerMoving, setPlayerMoving] = useState(false);
   const [gameStories, setGameStories] = useState([]);
+  const [winner, setWinner] = useState('');
   const [movePosition, setMovePosition] = useState({
     player: null,
     x: '170',
@@ -56,12 +58,16 @@ export const Game = () => {
   }
 
   const newRound = (diceNumber) => {
-    console.log(localState);
     const currentPlayer = state.game.gameState.currentPlayer.name;
     if (
       localState[currentPlayer] &&
       localState[currentPlayer].trap.consequence.amount > 0
     ) {
+      addStoryItem(
+        currentPlayer,
+        `${currentPlayer} is stil waiting`,
+        'waiting'
+      );
       localDispatch(removeTrapAmount(currentPlayer));
       changeCurrentPlayer();
       return;
@@ -96,6 +102,14 @@ export const Game = () => {
           x: xPosition,
           y: yPosition,
         });
+        if (gameTiles[placement].position === 'Kings Landing') {
+          addStoryItem('game', `${currentPlayer} wins the Throne!!`, '');
+          setTimeout(() => {
+            setWinner(currentPlayer);
+          }, 1000);
+          dispatch(setGameWinner(currentPlayer));
+          clearInterval(moves);
+        }
         moved++;
       } else {
         let currentPosition = fetchPlacementForCurrentPlayer() + amount;
@@ -105,20 +119,18 @@ export const Game = () => {
         dispatch(
           addMovesToPlayer(state.game.gameState.currentPlayer.name, amount)
         );
-        if (amount === 6) {
-          const randomNumberBetweenOneAndSix =
-            Math.floor(Math.random() * 6) + 1;
+        if (amount === 6 && gameTiles[currentPosition].trap === '') {
           addStoryItem(
             'game',
             `${currentPlayer} rolls a six. Please go again!`,
             'six-roll'
           );
-          movePlayer(randomNumberBetweenOneAndSix);
+          dispatch(setDiceRoll(null, false));
           return;
         }
         changeCurrentPlayer();
       }
-    }, 1000);
+    }, 500);
   };
 
   const movePlayerBackwards = (player, amount, startPosition) => {
@@ -141,27 +153,17 @@ export const Game = () => {
         dispatch(
           addMovesToPlayer(state.game.gameState.currentPlayer.name, amount)
         );
-        changeCurrentPlayer();
-        addStoryItem('game', 'Changing player', 'player-change');
       }
-    }, 1000);
+    }, 700);
   };
 
   const changeCurrentPlayer = () => {
     const currentPlayer = state.game.gameState.currentPlayer.name;
     if (currentPlayer === players[0][0].name) {
-      addStoryItem(
-        'game',
-        `${setCurrentPlayer(players[1][0]).name}s turn`,
-        'player-change'
-      );
+      addStoryItem('game', `${players[1][0].name}s turn`, 'player-change');
       dispatch(setCurrentPlayer(players[1][0]));
     } else {
-      addStoryItem(
-        'game',
-        `${setCurrentPlayer(players[0][0]).name}s turn`,
-        'player-change'
-      );
+      addStoryItem('game', `${players[0][0].name}s turn`, 'player-change');
       dispatch(setCurrentPlayer(players[0][0]));
     }
   };
@@ -176,7 +178,6 @@ export const Game = () => {
 
   const checkForTrap = (placement, player) => {
     if (gameTiles[placement].trap !== '') {
-      console.log(gameTiles[placement].trap);
       if (gameTiles[placement].trap.consequence.type === 'return') {
         addStoryItem(
           player,
@@ -203,6 +204,8 @@ export const Game = () => {
     }
   };
 
+  const checkWinner = (pos) => {};
+
   const addStoryItem = (player, story, type) => {
     setGameStories((prevState) => {
       return [...prevState, { player, type, story }];
@@ -222,9 +225,10 @@ export const Game = () => {
           players={players}
           newRound={newRound}
           moving={playerMoving}
+          position={movePosition}
         />
       </main>
-      <FinaleModal />
+      <FinaleModal winner={winner} />
     </>
   );
 };

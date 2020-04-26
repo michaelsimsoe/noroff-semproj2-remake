@@ -6,10 +6,16 @@ import {
   ADD_MOVES_TO_PLAYER,
   MOVE_TOKEN,
   REGISTER_PLAYER_TOKEN,
+  SET_WINNER,
+  RESET_GAME,
 } from '../actions/types';
 
 export default (
-  state = { players: [], gameState: { diceRolling: false, diceNumber: 1 } },
+  state = {
+    players: [],
+    winner: '',
+    gameState: { diceRolling: false, diceNumber: 1 },
+  },
   action
 ) => {
   switch (action.type) {
@@ -67,14 +73,6 @@ export default (
         }
         return player;
       });
-
-      // newPlayerArray = newPlayerArray.map((player) => {
-      //   if (player.name === playerName) {
-      //     console.log(`adding ${action.payload.token} to ${player.name}`);
-      //     player.token = action.payload.token;
-      //   }
-      //   return player;
-      // });
       return { ...state, players: newPlayerArray };
     case MOVE_TOKEN:
       return {
@@ -83,6 +81,16 @@ export default (
           ...state.gameState,
           moving: action.payload.moving,
         },
+      };
+    case SET_WINNER:
+      return {
+        ...state,
+        winner: action.payload.player,
+      };
+    case RESET_GAME:
+      return {
+        ...state,
+        players: [],
       };
     default:
       return state;

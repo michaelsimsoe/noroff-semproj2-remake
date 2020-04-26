@@ -9,6 +9,8 @@ import {
   MOVE_TOKEN,
   REGISTER_PLAYER_TOKEN,
   SET_PLAYER_TRAPPED,
+  SET_WINNER,
+  RESET_GAME,
 } from './types';
 const API = 'https://www.anapioficeandfire.com/api/';
 
@@ -138,5 +140,20 @@ export const trapPlayer = (player, trap) => {
       player,
       trap,
     },
+  };
+};
+
+export const setGameWinner = (player) => {
+  return {
+    type: SET_WINNER,
+    payload: {
+      player,
+    },
+  };
+};
+
+export const resetGame = () => {
+  return {
+    type: RESET_GAME,
   };
 };
